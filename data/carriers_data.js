@@ -54,52 +54,76 @@ const LOCATIONS = {
 
 const WIKI_SPECS = {
     "Clase Nimitz (EE.UU.)": { 
-        displacement: "100,000+ tons", length: "332.8 m", propulsion: "2x Reactores Nucleares A4W", 
-        airWing: "Aprox. 90 aviones (Super Hornets, Growlers, Hawkeyes, Seahawk)", radar: "SPS-48E 3-D, SPS-49(V)5 2-D" 
+        displacement: "105,000 tons", length: "332.8 m", propulsion: "2x Reactores Nucleares A4W", 
+        airWing: "90+ aeronaves (F/A-18E/F Super Hornet, EA-18G Growler, E-2D Hawkeye, C-2A Greyhound, MH-60R/S Seahawk)", 
+        radar: "SPS-48E 3-D, SPS-49(V)5 2-D",
+        weapons: "2-3× lanzadores RIM-116 RAM, 2× RIM-7 Sea Sparrow, 2× Phalanx CIWS 20mm"
     },
     "Clase Ford (EE.UU.)": { 
         displacement: "100,000+ tons", length: "337 m", propulsion: "2x Reactores Nucleares A1B", 
-        airWing: "Aprox. 90 aviones (incluye F-35C Lightning II)", radar: "AN/SPY-3 & AN/SPY-4 Dual Band" 
+        airWing: "90+ aeronaves (F-35C Lightning II, F/A-18E/F, EA-18G, E-2D, CMV-22B Osprey, MH-60R/S)", 
+        radar: "AN/SPY-3 & AN/SPY-4 Dual Band Radar (DBR)",
+        weapons: "2× lanzadores RIM-162 ESSM, 2× RIM-116 RAM, 3× Phalanx CIWS 20mm"
     },
     "Armada Española": { 
-        displacement: "26,000 tons", length: "230.8 m", propulsion: "CODLAG (Diésel-Eléctrico y Turbina)", 
-        airWing: "Aprox. 30 aeronaves (Harrier AV-8B+, NH90, SH-60)", radar: "Selex RAN-40L 3D" 
+        displacement: "26,000 tons", length: "230.8 m", propulsion: "CODLAG (1x Turbina Gas LM2500, 2x Motores Diésel)", 
+        airWing: "Aprox. 30 aeronaves (Harrier AV-8B+ Matador, Helicópteros NH90, SH-60B, AB-212)", 
+        radar: "Selex RAN-40L 3D / Lanza-N",
+        weapons: "4× cañones automáticos de 20mm, Ametralladoras pesadas M2 12.7mm (Reserva para CIWS)"
     },
     "Royal Navy (Reino Unido)": { 
-        displacement: "65,000 tons", length: "284 m", propulsion: "IFEP (Rolls-Royce MT30 GTs)", 
-        airWing: "Capacidad para 40-50 aeronaves (F-35B, Merlin HM2)", radar: "S1850M 3D, ARTISAN" 
+        displacement: "65,000 tons", length: "284 m", propulsion: "IFEP (2x Rolls-Royce MT30 GTs, 4x Wärtsilä Diésel)", 
+        airWing: "Correa estándar: 36× F-35B Lightning II. Helicópteros: Merlin HM2 (ASW/AEW), Wildcat AH1, Chinook", 
+        radar: "BAE Systems S1850M 3D, Artisan 3D Tipo 997",
+        weapons: "3× Phalanx CIWS 20mm, 4× cañones DS30M Mk2 de 30mm y miniguns"
     },
     "Armada Italiana (Marina Militare)": { 
-        displacement: "27,000 - 33,000 tons", length: "244 m", propulsion: "COGAG (LM2500)", 
-        airWing: "Aprox. 20-30 aeronaves (F-35B, Harrier, EH.101)", radar: "Selex RAN-40L 3D / Leonardo Kronos" 
+        displacement: "27,000 - 33,000 tons", length: "244 m", propulsion: "COGAG (4x Turbinas de gas LM2500)", 
+        airWing: "20-30 aeronaves (Cazas furtivos F-35B, Harrier AV-8B+. Helos: EH-101 Merlin, NH90)", 
+        radar: "Leonardo Kronos Naval, Selex RAN-40L 3D",
+        weapons: "32× celdas Sylver A43 (misiles Aster 15), 2× cañones OTO Melara 76mm, 3× CIWS Oerlikon 25mm"
     },
     "Marine Nationale (Francia)": { 
-        displacement: "42,500 tons", length: "261.5 m", propulsion: "2x Reactores Nucleares K15", 
-        airWing: "Aprox. 40 aeronaves (Rafale M, E-2C Hawkeye, NH90)", radar: "Thales Arabel 3D" 
+        displacement: "42,500 tons", length: "261.5 m", propulsion: "2x Reactores Nucleares Areva K15", 
+        airWing: "Aprox. 40 aeronaves (Cazas Dassault Rafale M, E-2C Hawkeye, Caïman Marine NH90, Panther)", 
+        radar: "Thales Arabel 3D multifunción, J11",
+        weapons: "32× celdas Sylver A43 (misiles Aster 15), 2× lanzadores Sadral (misiles Mistral 3)"
     },
     "Clase Kuznetsov (VMF)": { 
         displacement: "58,000 tons", length: "305 m", propulsion: "Calderas de Vapor (Mazut)", 
-        airWing: "Aprox. 40 aeronaves (Su-33, MiG-29K, Ka-27)", radar: "Sky Watch 3D" 
+        airWing: "24× cazas (Su-33 'Flanker-D', MiG-29K), 6× helicópteros Kamov Ka-27/Ka-31 (ASW/AEW)", 
+        radar: "Sky Watch 3D, Plate Steer",
+        weapons: "12× misiles antibuque de crucero P-700 Granit, 192× misiles SAM 3K95 Kinzhal, 8× CADS-N-1 Kashtan CIWS"
     },
     "Clase Tipo 001 (PLAN)": { 
         displacement: "60,000 tons", length: "304.5 m", propulsion: "Calderas de Vapor Modernizadas", 
-        airWing: "Aprox. 40 aeronaves (J-15, Z-8, Z-18)", radar: "Tipo 346 S-Band AESA" 
+        airWing: "Aprox. 40 aeronaves (24× cazas J-15 'Flying Shark', Helos: Z-8, Z-18J AEW, Z-9)", 
+        radar: "Tipo 346 S-Band AESA (Radares de fase plana)",
+        weapons: "3× Tipo 1130 CIWS (11 cañones 30mm), 3× lanzadores de misiles HQ-10 (18 celdas c/u)"
     },
     "Clase Tipo 002 (PLAN)": { 
-        displacement: "60,000 - 70,000 tons", length: "315 m", propulsion: "Calderas de Vapor Chinas", 
-        airWing: "Aprox. 44-50 aeronaves (J-15, Z-8, Z-18)", radar: "Tipo 346 S-Band AESA" 
+        displacement: "65,000 tons", length: "315 m", propulsion: "Calderas de Vapor Chinas", 
+        airWing: "Aprox. 44-50 aeronaves (32× cazas J-15, 8× helos Z-18, 4× helos Z-9)", 
+        radar: "Tipo 346A S-Band AESA avanzado",
+        weapons: "3× Tipo 1130 CIWS rotatorios 30mm, 3× lanzadores HQ-10 (misiles de defensa de punto)"
     },
     "Clase Tipo 003 (PLAN)": { 
-        displacement: "80,000+ tons", length: "316 m", propulsion: "Planta de Vapor (Convencional EMALS)", 
-        airWing: "Aprox. 60+ aeronaves (J-15T, J-35, KJ-600)", radar: "AESA Multipropósito" 
+        displacement: "80,000+ tons", length: "316 m", propulsion: "Catapultas EMALS, Motores Convencionales", 
+        airWing: "Aprox. 60+ aeronaves (Cazas J-15T, J-35 Stealth, Aviones de Alerta Temprana KJ-600)", 
+        radar: "Conjunto completo AESA Multipropósito Integrado",
+        weapons: "Sistemas HQ-10 de corto alcance y múltiples Tipo 1130 CIWS para defensa terminal"
     },
     "Clase Kuznetsov Mod.": { 
         displacement: "45,400 tons", length: "284 m", propulsion: "8x Calderas de Vapor Presurizadas", 
-        airWing: "Aprox. 36 aeronaves (MiG-29K, Ka-31, Kamov)", radar: "Podberezovik" 
+        airWing: "Aprox. 36 aeronaves (26× cazas MiG-29K/KUB, 10× helicópteros Kamov Ka-31, Ka-28)", 
+        radar: "Podberezovik 3D, Fregat-M2EM",
+        weapons: "Sistemas de Defensa Aérea Barak 8 (LRSAM), 4× AK-630 CIWS de fabricación rusa"
     },
     "Infantería (CAC) Autóctona": { 
-        displacement: "45,000 tons", length: "262 m", propulsion: "4x LM2500 Turbinas de Gas", 
-        airWing: "Aprox. 30 aeronaves (MiG-29K, MH-60R, ALH)", radar: "MF-STAR AESA" 
+        displacement: "45,000 tons", length: "262 m", propulsion: "4x Turbinas de Gas LM2500 (GE Marine)", 
+        airWing: "Aprox. 30 aeronaves (Cazas MiG-29K, esperando futuro Rafale M. Helos: MH-60R Seahawk, Dhruv ALH)", 
+        radar: "EL/M-2248 MF-STAR AESA, RAN-40L",
+        weapons: "32× celdas VLS para misiles Barak 8, 4× cañones super-rápidos OTO Melara 76mm, 4× AK-630 CIWS"
     }
 };
 
