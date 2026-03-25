@@ -46,9 +46,53 @@ const LOCATIONS = {
     pacific: { lat: 20.0, lng: -140.0, name: "Océano Pacífico" },
     north_sea: { lat: 56.50, lng: 3.50, name: "Mar del Norte / Jutlandia" },
     baltic_sea: { lat: 57.00, lng: 19.00, name: "Mar Báltico" },
+    baltic_sea: { lat: 57.00, lng: 20.00, name: "Mar Báltico" },
     caribbean_sea: { lat: 15.00, lng: -75.00, name: "Mar Caribe" },
-    horn_of_africa: { lat: 9.00, lng: 51.00, name: "Cuerno de África" },
+    horn_of_africa: { lat: 10.00, lng: 52.00, name: "Cuerno de África" },
     hawaii: { lat: 21.3, lng: -157.8, name: "Pearl Harbor, Hawaii" }
+};
+
+const WIKI_SPECS = {
+    "Clase Nimitz (EE.UU.)": { 
+        displacement: "100,000+ tons", length: "332.8 m", propulsion: "2x Reactores Nucleares A4W", 
+        airWing: "Aprox. 90 aviones (Super Hornets, Growlers, Hawkeyes, Seahawk)", radar: "SPS-48E 3-D, SPS-49(V)5 2-D" 
+    },
+    "Clase Ford (EE.UU.)": { 
+        displacement: "100,000+ tons", length: "337 m", propulsion: "2x Reactores Nucleares A1B", 
+        airWing: "Aprox. 90 aviones (incluye F-35C Lightning II)", radar: "AN/SPY-3 & AN/SPY-4 Dual Band" 
+    },
+    "Armada Española": { 
+        displacement: "26,000 tons", length: "230.8 m", propulsion: "CODLAG (Diésel-Eléctrico y Turbina)", 
+        airWing: "Aprox. 30 aeronaves (Harrier AV-8B+, NH90, SH-60)", radar: "Selex RAN-40L 3D" 
+    },
+    "Royal Navy (Reino Unido)": { 
+        displacement: "65,000 tons", length: "284 m", propulsion: "IFEP (Rolls-Royce MT30 GTs)", 
+        airWing: "Capacidad para 40-50 aeronaves (F-35B, Merlin HM2)", radar: "S1850M 3D, ARTISAN" 
+    },
+    "Armada Italiana (Marina Militare)": { 
+        displacement: "27,000 - 33,000 tons", length: "244 m", propulsion: "COGAG (LM2500)", 
+        airWing: "Aprox. 20-30 aeronaves (F-35B, Harrier, EH.101)", radar: "Selex RAN-40L 3D / Leonardo Kronos" 
+    },
+    "Kuznetsov Class (Rusia)": { 
+        displacement: "58,000 tons", length: "305 m", propulsion: "Caldearas de Vapor (Mazut)", 
+        airWing: "Aprox. 40 aeronaves (Su-33, MiG-29K, Ka-27)", radar: "Sky Watch 3D" 
+    },
+    "Kuznetsov Class (China)": { 
+        displacement: "60,000 tons", length: "305 m", propulsion: "Caldearas de Vapor Modernizadas", 
+        airWing: "Aprox. 40-50 aeronaves (J-15, Z-8, Z-18)", radar: "Tipo 346 S-Band AESA" 
+    },
+    "Type 003 (China)": { 
+        displacement: "80,000+ tons", length: "316 m", propulsion: "Planta de Vapor (Convencional EMALS)", 
+        airWing: "Aprox. 60+ aeronaves (J-15T, J-35, KJ-600)", radar: "AESA Multipropósito" 
+    },
+    "Clase Kíev Modificada (India)": { 
+        displacement: "45,400 tons", length: "284 m", propulsion: "8x Calderas de Vapor Presurizadas", 
+        airWing: "Aprox. 36 aeronaves (MiG-29K, Ka-31, Kamov)", radar: "Podberezovik" 
+    },
+    "Clase Vikrant (India)": { 
+        displacement: "45,000 tons", length: "262 m", propulsion: "4x LM2500 Turbinas de Gas", 
+        airWing: "Aprox. 30 aeronaves (MiG-29K, MH-60R, ALH)", radar: "MF-STAR AESA" 
+    }
 };
 
 const CARRIERS = [
