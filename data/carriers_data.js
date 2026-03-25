@@ -73,23 +73,31 @@ const WIKI_SPECS = {
         displacement: "27,000 - 33,000 tons", length: "244 m", propulsion: "COGAG (LM2500)", 
         airWing: "Aprox. 20-30 aeronaves (F-35B, Harrier, EH.101)", radar: "Selex RAN-40L 3D / Leonardo Kronos" 
     },
-    "Kuznetsov Class (Rusia)": { 
-        displacement: "58,000 tons", length: "305 m", propulsion: "Caldearas de Vapor (Mazut)", 
+    "Marine Nationale (Francia)": { 
+        displacement: "42,500 tons", length: "261.5 m", propulsion: "2x Reactores Nucleares K15", 
+        airWing: "Aprox. 40 aeronaves (Rafale M, E-2C Hawkeye, NH90)", radar: "Thales Arabel 3D" 
+    },
+    "Clase Kuznetsov (VMF)": { 
+        displacement: "58,000 tons", length: "305 m", propulsion: "Calderas de Vapor (Mazut)", 
         airWing: "Aprox. 40 aeronaves (Su-33, MiG-29K, Ka-27)", radar: "Sky Watch 3D" 
     },
-    "Kuznetsov Class (China)": { 
-        displacement: "60,000 tons", length: "305 m", propulsion: "Caldearas de Vapor Modernizadas", 
-        airWing: "Aprox. 40-50 aeronaves (J-15, Z-8, Z-18)", radar: "Tipo 346 S-Band AESA" 
+    "Clase Tipo 001 (PLAN)": { 
+        displacement: "60,000 tons", length: "304.5 m", propulsion: "Calderas de Vapor Modernizadas", 
+        airWing: "Aprox. 40 aeronaves (J-15, Z-8, Z-18)", radar: "Tipo 346 S-Band AESA" 
     },
-    "Type 003 (China)": { 
+    "Clase Tipo 002 (PLAN)": { 
+        displacement: "60,000 - 70,000 tons", length: "315 m", propulsion: "Calderas de Vapor Chinas", 
+        airWing: "Aprox. 44-50 aeronaves (J-15, Z-8, Z-18)", radar: "Tipo 346 S-Band AESA" 
+    },
+    "Clase Tipo 003 (PLAN)": { 
         displacement: "80,000+ tons", length: "316 m", propulsion: "Planta de Vapor (Convencional EMALS)", 
         airWing: "Aprox. 60+ aeronaves (J-15T, J-35, KJ-600)", radar: "AESA Multipropósito" 
     },
-    "Clase Kíev Modificada (India)": { 
+    "Clase Kuznetsov Mod.": { 
         displacement: "45,400 tons", length: "284 m", propulsion: "8x Calderas de Vapor Presurizadas", 
         airWing: "Aprox. 36 aeronaves (MiG-29K, Ka-31, Kamov)", radar: "Podberezovik" 
     },
-    "Clase Vikrant (India)": { 
+    "Infantería (CAC) Autóctona": { 
         displacement: "45,000 tons", length: "262 m", propulsion: "4x LM2500 Turbinas de Gas", 
         airWing: "Aprox. 30 aeronaves (MiG-29K, MH-60R, ALH)", radar: "MF-STAR AESA" 
     }
@@ -172,7 +180,7 @@ const CARRIERS = [
         { date: "2026-03-12", ...LOCATIONS.red_sea, status: "Desplegado", op: "Patrulla Mar Rojo Relevo", desc: "Abandonó la cuenca Caribeña cruzando el mundo bajo presión para tapar la brecha lograda por el caos Houthi y repeler ataques comerciales.", sources: [{ name: "CNN US Defense Analyst", url: "https://edition.cnn.com/world/middleeast" }] },
         { date: "2026-03-17", ...LOCATIONS.souda_bay, status: "En Puerto", op: "Muelle Minotaur K-14 (Avería)", desc: "Atracado discretamente en la base insular griega tras reportes periodísticos (USNI) señalando un conato de incendio menor sellando escotillas presurizadas.", sources: [{ name: "AutoOSINT: USNI News", url: "https://news.usni.org/2026/03/17/uss-gerald-r-ford-headed-to-souda-bay-for-repairs-after-fire" }] }
     ]},
-    { id: "cdg91", name: "FS Charles de Gaulle", hull: "R91", cls: "Marine Nationale (Francia)", launched: "7 May 1994", commissioned: "18 May 2001", history: [
+    { id: "cdg91", name: "FS Charles de Gaulle", hull: "R91", cls: "Marine Nationale (Francia)", country: "Francia", launched: "7 May 1994", commissioned: "18 May 2001", history: [
         { date: "2020-01-01", ...LOCATIONS.toulon, status: "En Puerto", op: "Alistamiento Dique", desc: "Preparativos nucleares estáticos en la emblemática base militar de la milicia marina francesa.", sources: [{ name: "Ministère des Armées", url: "https://www.defense.gouv.fr/marine" }] },
         { date: "2020-01-21", ...LOCATIONS.med_sea_east, status: "Desplegado", op: "Misión Foch", desc: "Liderando ataques letales conjuntos. Rafales de carga superpesada perforaron campamentos desérticos de células terroristas resguardadas.", sources: [{ name: "Le Figaro", url: "https://www.lefigaro.fr/international" }] },
         { date: "2021-02-21", ...LOCATIONS.arabian_sea, status: "Desplegado", op: "Misión Clemenceau 21", desc: "Colateralizando su peso nuclear, lideró maniobras cruzadas integrales respaldando la superioridad aérea aliada frente a potencias asiáticas.", sources: [{ name: "Opex360", url: "http://www.opex360.com/" }] },
