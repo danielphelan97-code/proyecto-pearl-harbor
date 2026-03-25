@@ -1015,6 +1015,7 @@
                 const specs = WIKI_SPECS[carrier.cls] || { displacement: "Desconocido", length: "Desconocido", propulsion: "Desconocido", airWing: "Desconocido", radar: "Desconocido", weapons: "Desconocido" };
                 document.getElementById('wiki-title').textContent = `${carrier.hull} ${carrier.name}`;
                 document.getElementById('wiki-class').textContent = carrier.cls;
+                document.getElementById('wiki-photo').src = carrier.photo || 'https://images.unsplash.com/photo-1549556150-1cdef237b671?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
                 document.getElementById('wiki-displacement').textContent = specs.displacement;
                 document.getElementById('wiki-length').textContent = specs.length;
                 document.getElementById('wiki-propulsion').textContent = specs.propulsion;
@@ -1276,22 +1277,31 @@
     
     <!-- WIKI MODAL -->
     <div id="wiki-modal" class="hidden fixed inset-0 z-[2000] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] animate-[fadeIn_0.2s_ease-out]">
-            <div class="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                    <h2 class="text-lg font-black text-white tracking-widest uppercase">EXPEDIENTE OSINT CLASIFICADO</h2>
+        <!-- Contenedor del Modal con efecto Glassmorphism -->
+        <div class="relative bg-slate-900/95 shadow-[0_0_80px_rgba(0,0,0,0.9)] max-w-3xl w-full mx-4 rounded-xl border border-blue-900/30 overflow-hidden backdrop-blur-xl flex flex-col max-h-[90vh]">
+            
+            <!-- Hero Banner Dinámico Fotográfico -->
+            <div class="w-full h-56 sm:h-72 bg-slate-900 relative shrink-0">
+                <img id="wiki-photo" src="" alt="OSINT Photo" class="w-full h-full object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700" onerror="this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+                <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+                    <div class="flex items-center gap-3 bg-black/60 px-3 py-1.5 rounded border border-red-900/50 backdrop-blur-md shadow-lg">
+                        <div class="h-2 w-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,1)]"></div>
+                        <h3 class="text-[10px] sm:text-xs font-bold text-red-500 tracking-[0.2em] font-mono">EXPEDIENTE CONFIDENCIAL // TS/SCI</h3>
+                    </div>
+                    <button onclick="document.getElementById('wiki-modal').classList.add('hidden')" class="bg-black/60 p-2 rounded-full text-slate-400 hover:text-white hover:bg-red-600 transition-all backdrop-blur-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
                 </div>
-                <button id="btn-close-wiki" class="text-slate-400 hover:text-red-500 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
+                <!-- Titular Inteligencia sobre la imagen -->
+                <div class="absolute bottom-4 left-6 right-6 z-10">
+                    <h3 id="wiki-title" class="text-3xl sm:text-4xl font-black text-white uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] tracking-tight"></h3>
+                    <p id="wiki-class" class="text-sm font-bold text-blue-400 uppercase tracking-widest drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"></p>
+                </div>
             </div>
-            <div class="p-6 overflow-y-auto space-y-6">
-                <div>
-                    <h3 id="wiki-title" class="text-2xl font-black text-blue-400 uppercase"></h3>
-                    <p id="wiki-class" class="text-sm font-bold text-slate-400 uppercase tracking-widest border-b border-slate-800 pb-2 mb-4"></p>
-                </div>
-                
+
+            <!-- Cuerpo del Expediente Carga Táctica -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-1">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-slate-800/50 p-3 rounded border border-slate-700/50 hover:bg-slate-800 transition-colors">
                         <p class="text-[10px] text-slate-500 uppercase font-black mb-1">Desplazamiento a plena carga</p>
