@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consola OSINT: Portaaviones Globales</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #020617;
+            color: #e2e8f0;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            background-color: #0f172a;
+        }
+
+        /* Animaciones */
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        .deployed-pulse {
+            animation: pulse-red 2s infinite;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 380px;
+            background-color: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(12px);
+            z-index: 10;
+            border-right: 1px solid #1e293b;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 320px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: 45%;
+                border-right: none;
+                border-bottom: 1px solid #1e293b;
+            }
+
+            #map-container {
+                height: 55%;
+            }
+        }
+
+        #map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        /* Custom UI Elements */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 0.5rem;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            margin-top: -6px;
+            border: 2px solid white;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #334155;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        .leaflet-container {
+            font-family: inherit !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="bg-slate-950 border-b border-slate-800 p-4 flex justify-between items-center z-20 shadow-2xl">
+            <div class="flex items-center gap-4">
+                <div class="p-2 bg-blue-600/20 rounded-lg border border-blue-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-white tracking-tighter uppercase italic">Strategic <span
+                            class="text-blue-500">Fleet Tracker</span></h1>
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <p class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Global OSINT
+                            Intelligence Feed // Live Mode</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden md:flex flex-col items-end">
+                <div id="current-date-display" class="text-2xl font-mono text-blue-400 font-bold tabular-nums">---</div>
+                <div class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Consola de Control Temporal
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar overflow-hidden shadow-2xl">
+                <!-- Resumen de Estadísticas -->
+                <div class="p-4 grid grid-cols-3 gap-2 border-b border-slate-800 bg-slate-900/40">
+                    <div class="text-center p-2 glass-panel">
+                        <p id="stats-deployed" class="text-xl font-bold text-red-500">0</p>
+                        <p class="text-[9px] uppercase text-slate-500 font-bold">Desplegados</p>
+                    </div>
+                    <div class="text-center p-2 glass-panel">
+                        <p id="stats-port" class="text-xl font-bold text-blue-400">0</p>
+                        <p class="text-[9px] uppercase text-slate-500 font-bold">En Puerto</p>
+                    </div>
+                    <div class="text-center p-2 glass-panel">
+                        <p id="stats-maintenance" class="text-xl font-bold text-slate-400">0</p>
+                        <p class="text-[9px] uppercase text-slate-500 font-bold">Astillero</p>
+                    </div>
+                </div>
+
+                <!-- Búsqueda -->
+                <div class="p-4 border-b border-slate-800 space-y-3">
+
+                    <!-- Filtros Tácticos -->
+                    <div class="flex gap-2 mt-4 overflow-x-auto pb-1 text-[10px] font-bold uppercase tracking-wider" id="filter-controls">
+                        <button class="filter-btn px-3 py-1.5 bg-blue-600 border border-blue-500 rounded text-white shadow-md transition-colors whitespace-nowrap" onclick="filterFaction('Todos', this)">🌐 Global</button>
+                        <button class="filter-btn px-3 py-1.5 bg-slate-900 border border-slate-700 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors whitespace-nowrap" onclick="filterFaction('OTAN', this)">🛡️ OTAN/EE.UU.</button>
+                        <button class="filter-btn px-3 py-1.5 bg-slate-900 border border-red-900/50 rounded text-red-500 hover:text-red-400 hover:bg-slate-800 transition-colors whitespace-nowrap" onclick="filterFaction('Otros', this)">⚔️ Otros</button>
+                    </div>
+
+                    <div class="relative">
+                        <input type="text" id="carrier-search" placeholder="Buscar unidad (ej. Ford, CVN-68)..."
+                            class="w-full bg-slate-950 border border-slate-700 text-sm p-2.5 pl-9 rounded-md focus:outline-none focus:border-blue-500 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 top-3 text-slate-500"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+
+                    <!-- Botón de Actualizar OSINT -->
+                    <button id="btn-sync-osint"
+                        class="w-full mt-3 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-3 rounded shadow-lg shadow-blue-500/20 transition-all duration-300 flex items-center justify-center gap-2 text-xs tracking-widest uppercase border border-blue-400/30 group">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 group-hover:rotate-180 transition-transform duration-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Actualizar Inteligencia
+                    </button>
+
+                </div>
+
+                <!-- Lista de Portaaviones -->
+                <div id="carrier-list" class="flex-1 overflow-y-auto p-4 space-y-2">
+                    <!-- Dinámico -->
+                </div>
+
+                <!-- Panel de Detalles -->
+                <div id="carrier-details"
+                    class="absolute inset-0 bg-slate-900 z-20 hidden flex-col border-r border-slate-700">
+                    <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+                        <button id="btn-back"
+                            class="text-slate-400 hover:text-white flex items-center gap-1 text-sm font-bold uppercase transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Volver
+                        </button>
+                        <span id="detail-hull"
+                            class="bg-blue-600/20 text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-500/30 font-mono font-bold"></span>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                        <header>
+                            <h3 id="detail-name" class="text-2xl font-black text-white leading-tight"></h3>
+                            <p id="detail-class"
+                                class="text-blue-500 text-xs font-bold uppercase tracking-tighter mt-1"></p>
+                            <p id="detail-dates" class="text-[10px] text-slate-400 mt-1 font-mono uppercase"></p>
+                        </header>
+
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+                                <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Estado y Ubicación
+                                    Operativa</p>
+                                <div class="flex items-center gap-3">
+                                    <span id="detail-status-dot"
+                                        class="w-3 h-3 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)]"></span>
+                                    <p id="detail-location" class="text-sm font-bold text-slate-200"></p>
+                                </div>
+                            </div>
+
+                            <div id="detail-operation"
+                                class="hidden p-3 rounded-lg bg-indigo-900/30 border border-indigo-500/30 flex items-center gap-3 shadow-inner">
+                                <span
+                                    class="animate-pulse w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]"></span>
+                                <div>
+                                    <p class="text-[9px] text-indigo-400 uppercase font-black tracking-widest">Contexto
+                                        Operativo // Histórico</p>
+                                    <p id="detail-operation-text" class="text-xs font-bold text-indigo-100"></p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <p class="text-[10px] text-slate-500 uppercase font-bold">Informe de Inteligencia OSINT
+                                </p>
+                                <p id="detail-description" class="text-sm leading-relaxed text-slate-400 italic"></p>
+                            </div>
+
+                            <div class="pt-4 border-t border-slate-800">
+                                <p class="text-[10px] text-slate-500 uppercase font-bold mb-3">Fuentes de Verificación
+                                </p>
+                                <div id="detail-source" class="space-y-2">
+                                    <!-- Dinámico -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Contenedor del Mapa -->
+            <div id="map-container">
+                <div id="map"></div>
+
+                <!-- Toggle de Capas -->
+                <div class="absolute top-4 left-4 z-[1000] flex flex-col gap-2">
+                    <button id="toggle-satellite"
+                        class="bg-slate-900/90 text-white p-2 rounded-lg border border-slate-700 hover:bg-blue-600 transition-colors shadow-lg"
+                        title="Cambiar Vista">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Leyenda -->
+                <div
+                    class="absolute bottom-6 right-6 z-[1000] bg-slate-950/90 backdrop-blur-md border border-slate-800 p-4 rounded-xl shadow-2xl text-[10px]">
+                    <h4 class="font-black text-slate-400 mb-3 uppercase tracking-widest border-b border-slate-800 pb-2">
+                        Guía de Simbología</h4>
+                    <div class="space-y-2.5">
+                        <div class="flex items-center gap-3">
+                            <span class="w-3 h-3 rounded-full bg-red-500 ring-4 ring-red-500/20"></span>
+                            <span class="text-slate-300 font-medium">Despliegue Activo / Combate</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="w-3 h-3 rounded-full bg-blue-500 ring-4 ring-blue-500/20"></span>
+                            <span class="text-slate-300 font-medium">En Puerto / Tránsito</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="w-3 h-3 rounded-full bg-slate-500 ring-4 ring-slate-500/20"></span>
+                            <span class="text-slate-300 font-medium">Mantenimiento / Astillero</span>
+                        </div>
+                        <div class="pt-2 border-t border-slate-800">
+                            <div class="flex items-center gap-3">
+                                <span class="w-6 h-0.5 bg-blue-500 border-t border-dashed border-blue-400"></span>
+                                <span class="text-slate-500 italic">Trayectoria Operativa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Línea de Tiempo -->
+        <div class="bg-slate-900 border-t border-slate-800 p-4 z-20">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6">
+                <div class="flex items-center gap-3 shrink-0">
+                    <button id="btn-play"
+                        class="bg-blue-600 hover:bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg hover:scale-105 active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="hidden sm:block">
+                        <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Simulación</p>
+                        <button id="btn-speed"
+                            class="text-xs font-mono text-blue-400 bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded cursor-pointer transition-colors border border-slate-700 border-b-2"
+                            title="Cambiar velocidad">1x</button>
+                    </div>
+                </div>
+
+                <div class="flex-1 w-full space-y-2">
+                    <div class="flex justify-between text-[10px] font-mono text-slate-500 uppercase">
+                        <span>Ene 2020</span>
+                        <span id="floating-date" class="text-blue-500 font-bold">---</span>
+                        <span id="end-date-display">Hoy</span>
+                    </div>
+                    <input type="range" id="timeline-slider" min="0" max="100" step="any" value="100" class="w-full">
+                </div>
+
+                <div class="shrink-0 flex items-center gap-2">
+                    <input type="date" id="date-picker"
+                        class="bg-slate-950 border border-slate-700 text-slate-200 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-blue-500"
+                        min="2020-01-01">
+                    <button id="btn-update" title="Actualizar localizaciones"
+                        class="bg-slate-800 hover:bg-blue-600 text-white border border-slate-700 hover:border-blue-500 text-xs px-3 py-2 rounded-lg font-bold uppercase transition-all flex items-center gap-1 shadow-lg hover:scale-105 active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+    </script>
+    <script src="data/carriers_data.js"></script>
+    <script>
+        const START_DATE = new Date("2020-01-01").getTime();
+        let END_DATE = new Date().getTime(); // Dinámico, verdaderamente la fecha del ordenador
+        let currentDate = new Date(END_DATE);
+
+        function formatLocalDateString(d) {
+            let month = '' + (d.getMonth() + 1);
+            let day = '' + d.getDate();
+            const year = d.getFullYear();
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
+        }
+        let selectedCarrierId = null;
+        let isPlaying = false;
+        let playInterval;
+        let mapMarkers = {};
+        let mapPath = null;
+        let isSatellite = false;
+        let searchQuery = "";
+
+        // Inicialización de Mapa
+        const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([20, 0], 2);
+
+        const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 });
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 });
+        darkLayer.addTo(map);
+        const ROUTE_NODES = {
+            san_diego: { lat: 32.7, lng: -117.1 },
+            hawaii: { lat: 21.3, lng: -157.8 },
+            panama: { lat: 9.3, lng: -79.9 },
+            baja_california: { lat: 18.0, lng: -105.0 },
+            brazil_coast: { lat: -10.0, lng: -35.0 },
+            cape_horn: { lat: -56.0, lng: -67.0 },
+            chile_coast: { lat: -30.0, lng: -75.0 },
+            windward_passage: { lat: 20.0, lng: -74.0 }, // Paso Caribe-Atlántico
+            us_east: { lat: 35.0, lng: -70.0 },
+            us_west: { lat: 40.0, lng: -126.0 },
+            atlantic: { lat: 35.0, lng: -30.0 },
+            biscay: { lat: 45.0, lng: -8.0 },
+            english_channel: { lat: 49.5, lng: -4.5 },
+            dover: { lat: 51.0, lng: 1.5 },
+            skagerrak: { lat: 57.7, lng: 10.0 },
+            baltic: { lat: 56.0, lng: 18.0 },
+            st_vincent: { lat: 36.5, lng: -9.5 },
+            gibraltar: { lat: 35.9, lng: -5.4 },
+            algiers: { lat: 38.0, lng: 4.0 },
+            sicily: { lat: 37.5, lng: 11.5 },
+            otranto: { lat: 39.8, lng: 19.5 },
+            med_east: { lat: 34.0, lng: 30.0 },
+            suez: { lat: 30.5, lng: 32.3 },
+            bab_el_mandeb: { lat: 12.5, lng: 43.3 },
+            indian_ocean: { lat: 15.0, lng: 60.0 },
+            malacca: { lat: 3.2, lng: 100.8 },
+            south_china_sea: { lat: 14.0, lng: 113.0 },
+            luzon_strait: { lat: 20.0, lng: 121.0 }, // Paso Filipinas-Taiwán
+            pac_west: { lat: 15.0, lng: 130.0 },
+            barents: { lat: 72.0, lng: 40.0 }, // Murmansk access
+            norwegian: { lat: 65.0, lng: 5.0 },
+            arabian_sea: { lat: 15.0, lng: 65.0 },
+            yellow_sea: { lat: 35.0, lng: 123.0 },
+            east_china: { lat: 28.0, lng: 125.0 }
+        };
+
+        const GRAPH = {
+            san_diego: ['hawaii', 'baja_california', 'us_west'],
+            us_west: ['san_diego', 'hawaii'],
+            hawaii: ['san_diego', 'pac_west', 'us_west'],
+            panama: ['baja_california', 'windward_passage', 'chile_coast'],
+            baja_california: ['san_diego', 'panama'],
+            brazil_coast: ['atlantic', 'cape_horn', 'windward_passage'],
+            cape_horn: ['brazil_coast', 'chile_coast'],
+            chile_coast: ['cape_horn', 'panama'],
+            windward_passage: ['panama', 'us_east'],
+            us_east: ['windward_passage', 'atlantic'],
+            atlantic: ['us_east', 'st_vincent', 'biscay', 'brazil_coast'],
+            biscay: ['atlantic', 'st_vincent', 'english_channel'],
+            english_channel: ['biscay', 'dover'],
+            dover: ['english_channel', 'skagerrak'],
+            skagerrak: ['dover', 'baltic'],
+            baltic: ['skagerrak'],
+            st_vincent: ['biscay', 'atlantic', 'gibraltar'],
+            gibraltar: ['st_vincent', 'algiers'],
+            algiers: ['gibraltar', 'sicily'],
+            sicily: ['algiers', 'otranto', 'med_east'],
+            otranto: ['sicily'],
+            med_east: ['sicily', 'suez'],
+            suez: ['med_east', 'bab_el_mandeb'],
+            bab_el_mandeb: ['suez', 'indian_ocean', 'arabian_sea'],
+            indian_ocean: ['bab_el_mandeb', 'arabian_sea', 'malacca'],
+            malacca: ['indian_ocean', 'south_china_sea'],
+            south_china_sea: ['malacca', 'luzon_strait'],
+            luzon_strait: ['south_china_sea', 'east_china', 'pac_west'],
+            pac_west: ['luzon_strait', 'east_china', 'hawaii'],
+            barents: ['norwegian'],
+            norwegian: ['barents', 'skagerrak', 'atlantic'],
+            arabian_sea: ['indian_ocean', 'bab_el_mandeb'],
+            yellow_sea: ['east_china'],
+            east_china: ['yellow_sea', 'luzon_strait', 'pac_west']
+        };
+
+        function getMaritimeRoute(start, end) {
+            const getRegion = (p) => {
+                if (p.lat > 53 && p.lng > 12 && p.lng < 30) return 'baltic';
+                if (p.lat > 50 && p.lng > 0 && p.lng <= 12) return 'dover';
+                if (p.lat > 48 && p.lng > -8 && p.lng <= 0) return 'english_channel';
+                if (p.lat > 43 && p.lat <= 48 && p.lng > -12 && p.lng <= -1) return 'biscay';
+                if (p.lat >= 30 && p.lat <= 43 && p.lng > -12 && p.lng <= -5) return 'st_vincent';
+                if (p.lat >= 34 && p.lat < 45 && p.lng > -5 && p.lng < 13) return 'algiers';
+                if (p.lat >= 40 && p.lng >= 12 && p.lng <= 20) return 'otranto';
+                if (p.lat >= 30 && p.lat < 40 && p.lng >= 13 && p.lng < 36) return 'med_east';
+                if (p.lat >= 10 && p.lat < 30 && p.lng >= 30 && p.lng < 45) return 'bab_el_mandeb';
+                if (p.lat >= -20 && p.lat <= 30 && p.lng >= 45 && p.lng < 100) return 'indian_ocean';
+                if (p.lng >= 100 && p.lng <= 118 && p.lat > 0 && p.lat < 23) return 'south_china_sea';
+                if (p.lng >= 118 && p.lng <= 124 && p.lat >= 15 && p.lat <= 25) return 'luzon_strait';
+                if (p.lng > 124 && p.lng <= 180) return 'pac_west';
+                if (p.lng >= -180 && p.lng <= -130 && p.lat > 0) return 'hawaii';
+                if (p.lat > 35 && p.lng > -130 && p.lng < -100) return 'us_west';
+                if (p.lat <= 35 && p.lng > -130 && p.lng < -100 && p.lat > 0) return 'san_diego';
+                if (p.lat >= 10 && p.lat <= 25 && p.lng >= -85 && p.lng <= -65) return 'windward_passage';
+                if (p.lng >= -100 && p.lng < -40 && p.lat > 25) return 'us_east';
+                if (p.lng >= -40 && p.lng <= -12) return 'atlantic';
+                if (p.lat < -45) return 'cape_horn';
+                if (p.lat < 5 && p.lng > -70 && p.lng < -20) return 'brazil_coast';
+                if (p.lat < 5 && p.lng <= -70 && p.lng > -100) return 'chile_coast';
+                if (p.lat >= 10 && p.lat <= 25 && p.lng < -85 && p.lng > -115) return 'baja_california';
+
+                let closest = 'atlantic';
+                let minDist = Infinity;
+                for (const [name, coord] of Object.entries(ROUTE_NODES)) {
+                    let dLng = Math.abs(coord.lng - p.lng);
+                    if (dLng > 180) dLng = 360 - dLng;
+                    const dist = Math.sqrt(Math.pow(coord.lat - p.lat, 2) + Math.pow(dLng, 2));
+                    if (dist < minDist) { minDist = dist; closest = name; }
+                }
+                return closest;
+            };
+
+            const startNode = getRegion(start);
+            const endNode = getRegion(end);
+            if (startNode === endNode) return [start, end];
+
+            let queue = [[startNode]];
+            let visited = new Set();
+            let path = null;
+
+            while (queue.length > 0) {
+                let currentPath = queue.shift();
+                let current = currentPath[currentPath.length - 1];
+
+                if (current === endNode) { path = currentPath; break; }
+
+                if (!visited.has(current)) {
+                    visited.add(current);
+                    if (GRAPH[current]) {
+                        for (let neighbor of GRAPH[current]) queue.push([...currentPath, neighbor]);
+                    }
+                }
+            }
+
+            if (!path) return [start, end];
+
+            let finalRoute = [start];
+            for (let i = 0; i < path.length; i++) finalRoute.push(ROUTE_NODES[path[i]]);
+            finalRoute.push(end);
+            return finalRoute;
+        }
+
+        function interpolatePath(route, fraction) {
+            if (route.length === 2) {
+                let dLng = route[1].lng - route[0].lng;
+                if (dLng > 180) dLng -= 360; else if (dLng < -180) dLng += 360;
+                return { lat: route[0].lat + (route[1].lat - route[0].lat) * fraction, lng: route[0].lng + dLng * fraction };
+            }
+
+            const distances = [];
+            let totalDist = 0;
+            for (let i = 0; i < route.length - 1; i++) {
+                let dlng = route[i + 1].lng - route[i].lng;
+                if (dlng > 180) dlng -= 360; else if (dlng < -180) dlng += 360;
+                let dist = Math.sqrt(Math.pow(route[i + 1].lat - route[i].lat, 2) + Math.pow(dlng, 2));
+                distances.push(dist);
+                totalDist += dist;
+            }
+
+            const targetDist = totalDist * fraction;
+            let traversed = 0;
+            for (let i = 0; i < route.length - 1; i++) {
+                if (traversed + distances[i] >= targetDist) {
+                    const segFraction = (targetDist - traversed) / distances[i];
+                    let dlng = route[i + 1].lng - route[i].lng;
+                    if (dlng > 180) dlng -= 360; else if (dlng < -180) dlng += 360;
+                    return {
+                        lat: route[i].lat + (route[i + 1].lat - route[i].lat) * segFraction,
+                        lng: route[i].lng + dlng * segFraction
+                    };
+                }
+                traversed += distances[i];
+            }
+            return { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng };
+        }
+
+        function getCarrierStateAtDate(carrier, date) {
+            if (!date || isNaN(date.getTime())) return { ...carrier.history[0] };
+            const dateTime = date.getTime();
+
+            const sortedHistory = [...carrier.history].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            if (dateTime < new Date(sortedHistory[0].date).getTime()) {
+                return { ...sortedHistory[0] };
+            }
+            let prev = sortedHistory[0];
+            let next = null;
+
+            for (let i = 0; i < sortedHistory.length; i++) {
+                const hTime = new Date(sortedHistory[i].date).getTime();
+                if (hTime <= dateTime) {
+                    prev = sortedHistory[i];
+                } else {
+                    next = sortedHistory[i];
+                    break;
+                }
+            }
+
+            if (!next) {
+                return { ...prev };
+            }
+
+            const prevTime = new Date(prev.date).getTime();
+            const nextTime = new Date(next.date).getTime();
+            const totalDuration = nextTime - prevTime;
+            const transitTime = 60 * 24 * 60 * 60 * 1000;
+
+            let lngDiff = next.lng - prev.lng;
+            if (lngDiff > 180) lngDiff -= 360;
+            else if (lngDiff < -180) lngDiff += 360;
+
+            const route = getMaritimeRoute(prev, next);
+            const isLongDistance = Math.abs(prev.lat - next.lat) > 10 || Math.abs(lngDiff) > 15 || route.length > 2;
+            let moveFraction = 0;
+
+            moveFraction = (dateTime - prevTime) / totalDuration;
+
+            moveFraction = Math.max(0, Math.min(1, moveFraction));
+
+            let mapLat = prev.lat;
+            let mapLng = prev.lng;
+
+            if (isLongDistance) {
+                const pos = interpolatePath(route, moveFraction);
+                mapLat = pos.lat;
+                mapLng = pos.lng;
+            } else {
+                mapLat = prev.lat + (next.lat - prev.lat) * moveFraction;
+                mapLng = prev.lng + lngDiff * moveFraction;
+            }
+
+            if (moveFraction === 0 && prev.status === "Desplegado") {
+                const patrolPhase = dateTime / (1000 * 60 * 60 * 24 * 3); // Órbita de 3 días
+                mapLat += Math.sin(patrolPhase) * 0.15; // Radio dinámico ultra corto (aprox 15 km)
+                mapLng += Math.cos(patrolPhase) * 0.2;
+            }
+
+            let computedStatus = prev.status;
+            let computedName = prev.name;
+            let computedDesc = prev.desc;
+
+            // Omitido: El tránsito oceánico ya no sobrescribe OSINT.
+
+            return {
+                ...prev,
+                status: computedStatus,
+                name: computedName,
+                desc: computedDesc,
+                lat: mapLat,
+                lng: mapLng
+            };
+        }
+
+        function getCarrierHistoryUpToDate(carrier, date) {
+            if (!date || isNaN(date.getTime())) return [];
+            const dateTime = date.getTime();
+            return carrier.history.filter(h => new Date(h.date).getTime() <= dateTime);
+        }
+
+        function updateFleetStats() {
+            let stats = { deployed: 0, port: 0, maintenance: 0 };
+            CARRIERS.forEach(c => {
+                let isVisible = true;
+                if (activeFaction === 'OTAN' && !["EE.UU.", "Italia", "Francia", "Reino Unido", "España"].includes(c.country)) isVisible = false;
+                if (activeFaction === 'Otros' && !["China", "Rusia", "India"].includes(c.country)) isVisible = false;
+                if (c.launched) {
+                    const launchTime = new Date(c.launched).getTime();
+                    if (!isNaN(launchTime) && currentDate.getTime() < launchTime) isVisible = false;
+                }
+                if (c.decommissioned) {
+                    const decommTime = new Date(c.decommissioned).getTime();
+                    if (!isNaN(decommTime) && currentDate.getTime() >= decommTime) isVisible = false;
+                }
+                
+                if (!isVisible) return;
+
+                const state = getCarrierStateAtDate(c, currentDate);
+                if (state.status === "Desplegado") stats.deployed++;
+                else if (state.status === "Mantenimiento") stats.maintenance++;
+                else stats.port++;
+            });
+            document.getElementById('stats-deployed').textContent = stats.deployed;
+            document.getElementById('stats-port').textContent = stats.port;
+            document.getElementById('stats-maintenance').textContent = stats.maintenance;
+        }
+
+        let accordionState = { "EE.UU.": true, "China": true, "Rusia": true, "India": true, "Italia": true, "Francia": true, "Reino Unido": true, "España": true, "OTAN y Aliados": true, "Otros": true };
+        const globalFlags = {
+            "EE.UU.": '<img src="https://flagcdn.com/w20/us.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="US">',
+            "China": '<img src="https://flagcdn.com/w20/cn.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="CN">',
+            "Rusia": '<img src="https://flagcdn.com/w20/ru.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="RU">',
+            "Italia": '<img src="https://flagcdn.com/w20/it.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="IT">',
+            "Francia": '<img src="https://flagcdn.com/w20/fr.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="FR">',
+            "Reino Unido": '<img src="https://flagcdn.com/w20/gb.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="UK">',
+            "España": '<img src="https://flagcdn.com/w20/es.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="ES">',
+            "India": '<img src="https://flagcdn.com/w20/in.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="IN">'
+        };
+
+        let activeFaction = 'Todos'; // 'Todos', 'OTAN', 'Otros'
+        window.filterFaction = function(faction, btnElement) {
+            activeFaction = faction;
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.className = "filter-btn px-3 py-1.5 bg-slate-900 border border-slate-700 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors whitespace-nowrap";
+                if (b.innerText.includes('Otros')) b.classList.add('border-red-900/50', 'text-red-500');
+            });
+            btnElement.className = `filter-btn px-3 py-1.5 ${faction === 'Todos' ? 'bg-blue-600 border-blue-500 text-white' : faction === 'OTAN' ? 'bg-blue-800 border-blue-600 text-white' : 'bg-red-800 border-red-600 text-white'} rounded shadow-md transition-colors whitespace-nowrap`;
+            
+            renderCarrierList();
+            updateMarkers();
+            updateFleetStats();
+        };
+
+        function renderCarrierList() {
+            const container = document.getElementById('carrier-list');
+            if (!container) return;
+            container.innerHTML = '';
+            const filtered = CARRIERS.filter(c => {
+                const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || c.hull.toLowerCase().includes(searchQuery.toLowerCase());
+                if (!matchesSearch) return false;
+                
+                if (activeFaction === 'OTAN' && !["EE.UU.", "Italia", "Francia", "Reino Unido", "España"].includes(c.country)) return false;
+                if (activeFaction === 'Otros' && !["China", "Rusia", "India"].includes(c.country)) return false;
+                
+                return true;
+            });
+
+            const macroBlocks = {
+                "OTAN y Aliados": { icon: "🛡️", countries: ["EE.UU.", "Reino Unido", "Francia", "Italia", "España"] },
+                "Otros": { icon: "⚔️", countries: ["China", "Rusia", "India"] }
+            };
+
+            const carriersByCountry = {};
+            filtered.forEach(c => {
+                const country = c.country || "EE.UU.";
+                if (!carriersByCountry[country]) carriersByCountry[country] = [];
+                carriersByCountry[country].push(c);
+            });
+
+            for (const macroKey in macroBlocks) {
+                const blockCountries = macroBlocks[macroKey].countries;
+                let macroTotal = 0;
+                let macroHtmlObj = [];
+                
+                blockCountries.forEach(countryKey => {
+                    if (!carriersByCountry[countryKey]) return;
+                    const carriersList = carriersByCountry[countryKey].filter(c => {
+                        if (c.launched) {
+                            const launchTime = new Date(c.launched).getTime();
+                            if (!isNaN(launchTime) && currentDate.getTime() < launchTime) return false;
+                        }
+                        if (c.decommissioned) {
+                            const decommTime = new Date(c.decommissioned).getTime();
+                            if (!isNaN(decommTime) && currentDate.getTime() >= decommTime) return false;
+                        }
+                        return true;
+                    });
+                    if (carriersList.length === 0) return;
+                    macroTotal += carriersList.length;
+                    
+                    const listHtml = carriersList.map(c => {
+                        const state = getCarrierStateAtDate(c, currentDate);
+                        const isActive = selectedCarrierId === c.id;
+                        let statusColor = "bg-blue-500";
+                        if (state.status === "Desplegado") statusColor = "bg-red-500";
+                        if (state.status === "Mantenimiento") statusColor = "bg-slate-500";
+                        return `<div class="p-3 ml-2 rounded-lg border cursor-pointer transition-all flex items-center justify-between group ${isActive ? 'bg-blue-600/20 border-blue-500 shadow-lg' : 'bg-slate-900/40 border-slate-800 hover:border-slate-600'}" onclick="selectCarrier('${c.id}')">
+                            <div class="flex items-center gap-3">
+                                <div class="w-1.5 h-8 ${statusColor} rounded-full"></div>
+                                <div><p class="text-xs font-black text-white">${c.hull}</p><p class="text-[10px] text-slate-500 font-bold uppercase truncate max-w-[150px]">${c.name}</p></div>
+                            </div>
+                            <div class="text-right flex flex-col items-end">
+                                <div class="bg-yellow-500/20 border border-yellow-500/50 rounded px-1 py-0.5 mb-1 inline-block shadow max-w-fit"><p class="text-[10px] font-black text-yellow-500 tracking-tight">OSINT: ${state.date}</p></div>
+                                <p class="text-[9px] font-mono text-slate-500 truncate max-w-[90px]">${state.name}</p>
+                            </div>
+                        </div>`;
+                    }).join('');
+
+                    macroHtmlObj.push({ countryKey, length: carriersList.length, html: listHtml });
+                });
+
+                if (macroTotal === 0) continue;
+
+                const macroHeader = document.createElement('div');
+                macroHeader.className = "flex justify-between items-center p-3 mt-5 mb-2 bg-slate-700/80 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-600 transition-colors shadow-md text-white sticky top-0 z-20 backdrop-blur-md";
+                const macroToggleState = accordionState[macroKey] ? 'rotate(0deg)' : 'rotate(-90deg)';
+                const macroDisplayState = accordionState[macroKey] ? 'block' : 'none';
+
+                macroHeader.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">${macroBlocks[macroKey].icon}</span>
+                        <span class="font-black text-sm uppercase tracking-widest text-white">${macroKey} <span class="text-blue-200 bg-blue-900/80 px-2 py-0.5 rounded ml-1">${macroTotal}</span></span>
+                    </div>
+                    <svg class="h-5 w-5 text-slate-300 transition-transform duration-200" style="transform: ${macroToggleState};" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                `;
+
+                const macroContent = document.createElement('div');
+                macroContent.className = "pl-2 space-y-3";
+                macroContent.style.display = macroDisplayState;
+
+                macroHeader.onclick = () => {
+                    accordionState[macroKey] = !accordionState[macroKey];
+                    macroContent.style.display = accordionState[macroKey] ? 'block' : 'none';
+                    macroHeader.querySelector('svg').style.transform = accordionState[macroKey] ? 'rotate(0deg)' : 'rotate(-90deg)';
+                };
+
+                macroHtmlObj.forEach(child => {
+                    const childHeader = document.createElement('div');
+                    childHeader.className = "flex justify-between items-center p-2 mt-2 mb-1 bg-slate-800/80 border border-slate-700 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors shadow-sm text-white sticky top-12 z-10 backdrop-blur-md";
+                    const cToggle = accordionState[child.countryKey] ? 'rotate(0deg)' : 'rotate(-90deg)';
+                    childHeader.innerHTML = `<div class="flex items-center gap-2"><span class="text-base flex items-center h-full">${globalFlags[child.countryKey] || ''}</span><span class="font-black text-xs uppercase tracking-widest text-slate-300 ml-1">${child.countryKey} <span class="text-blue-400 bg-blue-900/40 px-1.5 py-0.5 rounded ml-1">${child.length}</span></span></div><svg class="h-3 w-3 text-slate-400 transition-transform duration-200" style="transform: ${cToggle};" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>`;
+                    
+                    const childContent = document.createElement('div');
+                    childContent.className = "space-y-2 mt-1 mb-2 border-l border-slate-700/50 pl-2 ml-2";
+                    childContent.style.display = accordionState[child.countryKey] ? 'block' : 'none';
+                    childContent.innerHTML = child.html;
+                    
+                    childHeader.onclick = () => {
+                        accordionState[child.countryKey] = !accordionState[child.countryKey];
+                        childContent.style.display = accordionState[child.countryKey] ? 'block' : 'none';
+                        childHeader.querySelector('svg').style.transform = accordionState[child.countryKey] ? 'rotate(0deg)' : 'rotate(-90deg)';
+                    };
+
+                    macroContent.appendChild(childHeader);
+                    macroContent.appendChild(childContent);
+                });
+
+                container.appendChild(macroHeader);
+                container.appendChild(macroContent);
+            }
+        }
+
+        function updateMarkers() {
+            CARRIERS.forEach(c => {
+                let isVisible = true;
+                if (activeFaction === 'OTAN' && !["EE.UU.", "Italia", "Francia", "Reino Unido", "España"].includes(c.country)) isVisible = false;
+                if (activeFaction === 'Otros' && !["China", "Rusia", "India"].includes(c.country)) isVisible = false;
+
+                if (c.launched) {
+                    const launchTime = new Date(c.launched).getTime();
+                    if (!isNaN(launchTime) && currentDate.getTime() < launchTime) isVisible = false;
+                }
+                if (c.decommissioned) {
+                    const decommTime = new Date(c.decommissioned).getTime();
+                    if (!isNaN(decommTime) && currentDate.getTime() >= decommTime) isVisible = false;
+                }
+
+                if (!isVisible) {
+                    if (mapMarkers[c.id]) {
+                        map.removeLayer(mapMarkers[c.id]);
+                        delete mapMarkers[c.id];
+                    }
+                    if (selectedCarrierId === c.id) {
+                        selectedCarrierId = null;
+                        document.getElementById('carrier-details').classList.add('hidden');
+                        if (mapPath) { map.removeLayer(mapPath); mapPath = null; }
+                    }
+                    return;
+                }
+
+                const state = getCarrierStateAtDate(c, currentDate);
+                const isSelected = selectedCarrierId === c.id;
+                const isDeployed = state.status === "Desplegado";
+                const isMaintenance = state.status === "Mantenimiento";
+                let color = isDeployed ? "#ef4444" : (isMaintenance ? "#64748b" : "#3b82f6");
+
+                const svgWidth = isSelected ? 48 : 32;
+                const svgHeight = isSelected ? 48 : 32;
+                const strokeColor = isSelected ? "#60a5fa" : "white";
+
+                const carrierSvg = `
+                <div class="relative flex items-center justify-center pointer-events-none" style="width: ${svgWidth}px; height: ${svgHeight}px;">
+                    <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.6)); ${isDeployed ? 'animation: pulse 2s infinite;' : ''} ${isSelected ? 'transform: scale(1.1);' : ''} transition: transform 0.2s;">
+                      <path d="M 28 4 L 36 4 L 40 12 L 40 54 L 32 62 L 24 54 L 24 12 Z" fill="${color}" stroke="${strokeColor}" stroke-width="${isSelected ? '2.5' : '1.5'}"/>
+                      <polygon points="24 20, 14 46, 24 46" fill="${color}" stroke="${strokeColor}" stroke-width="${isSelected ? '1.5' : '1'}"/>
+                      <rect x="36" y="28" width="6" height="12" fill="#1e293b" />
+                      <line x1="32" y1="10" x2="32" y2="56" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
+                      <line x1="22" y1="44" x2="34" y2="20" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
+                    </svg>
+                    <div class="absolute -top-1 -right-2 bg-slate-950 rounded px-0.5 py-0.5 flex items-center justify-center text-[12px] shadow-[0_4px_10px_rgba(0,0,0,0.9)] border border-slate-700 z-10 opacity-95" style="pointer-events: auto;">
+                        ${globalFlags[c.country] || "🏴"}
+                    </div>
+                </div>`;
+
+                const icon = L.divIcon({
+                    className: 'custom-icon',
+                    html: carrierSvg,
+                    iconSize: [svgWidth, svgHeight],
+                    iconAnchor: [svgWidth / 2, svgHeight / 2]
+                });
+                const popupHtml = `
+                <div class="min-w-[240px] text-slate-200">
+                    <b class="text-blue-600 text-base block mb-1">${c.hull} ${c.name}</b>
+                    <div class="flex items-center gap-2 mb-2"><span class="bg-yellow-500 text-slate-900 px-1.5 py-0.5 rounded text-[10px] font-black shadow-lg">DATA: ${state.date}</span><span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${state.op || state.status}</span></div>
+                    <p class="text-xs mb-3 text-slate-700 italic border-l-2 border-blue-500 pl-2 leading-relaxed">${state.desc}</p>
+                    ${state.sources && state.sources[0] ? `<a href="${state.sources[0].url === '#' ? 'https://google.com/search?q=' + encodeURIComponent(c.name + ' ' + state.sources[0].name) : state.sources[0].url}" target="_blank" class="inline-block text-blue-600 underline text-xs font-semibold hover:text-blue-800">Ver fuente OSINT: ${state.sources[0].name}</a>` : ''}
+                </div>`;
+
+                if (mapMarkers[c.id]) {
+                    mapMarkers[c.id].setLatLng([state.lat, state.lng]);
+                    mapMarkers[c.id].setIcon(icon);
+                    mapMarkers[c.id].setPopupContent(popupHtml);
+                } else {
+                    const m = L.marker([state.lat, state.lng], { icon: icon }).addTo(map);
+                    m.on('click', () => selectCarrier(c.id));
+                    m.bindPopup(popupHtml, { offset: [0, -10], autoClose: false });
+                    mapMarkers[c.id] = m;
+                }
+            });
+            if (selectedCarrierId) {
+                const carrier = CARRIERS.find(c => c.id === selectedCarrierId);
+                const history = getCarrierHistoryUpToDate(carrier, currentDate);
+                const points = history.map(h => [h.lat, h.lng]);
+                const currentState = getCarrierStateAtDate(carrier, currentDate);
+                points.push([currentState.lat, currentState.lng]);
+                if (mapPath) map.removeLayer(mapPath);
+                mapPath = L.polyline(points, { color: '#3b82f6', weight: 2, dashArray: '5, 10', opacity: 0.6 }).addTo(map);
+            } else if (mapPath) {
+                map.removeLayer(mapPath);
+            }
+        }
+
+        function selectCarrier(id) {
+            selectedCarrierId = id;
+            const carrier = CARRIERS.find(c => c.id === id);
+            const state = getCarrierStateAtDate(carrier, currentDate);
+            document.getElementById('carrier-details').classList.remove('hidden');
+            document.getElementById('detail-name').textContent = carrier.name;
+            document.getElementById('detail-class').textContent = `${carrier.hull} // ${carrier.cls}`;
+            if (carrier.launched && carrier.commissioned) {
+                const bajaText = carrier.decommissioned ? carrier.decommissioned : "En Servicio";
+                document.getElementById('detail-dates').textContent = `Botadura: ${carrier.launched} | Alta: ${carrier.commissioned} | Baja: ${bajaText}`;
+                document.getElementById('detail-dates').classList.remove('hidden');
+            } else {
+                document.getElementById('detail-dates').classList.add('hidden');
+            }
+            document.getElementById('detail-location').textContent = `${state.status.toUpperCase()} // ${state.name}`;
+            const dateEl = document.getElementById('detail-date');
+            if (dateEl) dateEl.innerHTML = `<span class="bg-yellow-500 text-slate-900 px-2 py-0.5 rounded font-black shadow-[0_0_15px_rgba(234,179,8,0.5)]">FECHA DE REPORTE: ${state.date}</span>`;
+            document.getElementById('detail-description').textContent = state.desc;
+
+            const opDiv = document.getElementById('detail-operation');
+            if (state.op) {
+                opDiv.classList.remove('hidden');
+                document.getElementById('detail-operation-text').textContent = state.op;
+            } else {
+                opDiv.classList.add('hidden');
+            }
+
+            const dot = document.getElementById('detail-status-dot');
+            dot.className = `w-3 h-3 rounded-full ${state.status === "Desplegado" ? "bg-red-500 shadow-red-500/50" : state.status === "Mantenimiento" ? "bg-slate-500 shadow-slate-500/50" : "bg-blue-500 shadow-blue-500/50"}`;
+            const sources = document.getElementById('detail-source');
+            sources.innerHTML = '';
+            state.sources.forEach(s => {
+                const a = document.createElement('a');
+                let href = s.url;
+                if (!href || href === '#' || href === '') {
+                    href = `https://www.google.com/search?q=${encodeURIComponent(carrier.name + ' "' + s.name + '" location news')}`;
+                }
+                a.href = href; a.target = "_blank"; a.className = "block text-xs text-blue-400 hover:text-white bg-slate-950 p-2 rounded border border-slate-800 transition-colors truncate mb-1";
+                a.innerHTML = `<span class="opacity-50 mr-1">FUENTE:</span> ${s.name}`;
+                sources.appendChild(a);
+            });
+            renderCarrierList();
+            updateMarkers();
+            map.flyTo([state.lat, state.lng], 4);
+        }
+
+        function updateTime() {
+            // Validación de seguridad para la fecha
+            if (!currentDate || isNaN(currentDate.getTime())) {
+                console.warn("Se ha detectado una fecha no válida. Restableciendo al final.");
+                currentDate = new Date(END_DATE);
+            }
+
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            const formatted = currentDate.toLocaleDateString('es-ES', options).toUpperCase();
+            document.getElementById('current-date-display').textContent = formatted;
+            document.getElementById('floating-date').textContent = formatted;
+
+            const datePicker = document.getElementById('date-picker');
+            if (!isPlaying) {
+                try {
+                    datePicker.max = formatLocalDateString(new Date());
+                    datePicker.value = formatLocalDateString(currentDate);
+                } catch (e) {
+                    console.error("Error al sincronizar el selector de fecha:", e);
+                }
+            }
+
+            updateFleetStats();
+            renderCarrierList();
+            updateMarkers();
+            if (selectedCarrierId) {
+                const carrier = CARRIERS.find(c => c.id === selectedCarrierId);
+                let isLaunched = true;
+                if (carrier.launched) {
+                    const launchTime = new Date(carrier.launched).getTime();
+                    if (!isNaN(launchTime) && currentDate.getTime() < launchTime) isLaunched = false;
+                }
+
+                if (!isLaunched) {
+                    selectedCarrierId = null;
+                    document.getElementById('carrier-details').classList.add('hidden');
+                } else {
+                    const state = getCarrierStateAtDate(carrier, currentDate);
+                    document.getElementById('detail-location').textContent = `${state.status.toUpperCase()} // ${state.name}`;
+                    document.getElementById('detail-description').textContent = state.desc;
+                    const opDiv = document.getElementById('detail-operation');
+                    if (state.op) {
+                        opDiv.classList.remove('hidden');
+                        document.getElementById('detail-operation-text').textContent = state.op;
+                    } else {
+                        opDiv.classList.add('hidden');
+                    }
+                }
+            }
+        }
+
+        // Eventos
+        document.getElementById('timeline-slider').oninput = (e) => {
+            const pct = parseFloat(e.target.value) / 100;
+            const newTime = START_DATE + pct * (END_DATE - START_DATE);
+            const newDate = new Date(newTime);
+
+            if (!isNaN(newDate.getTime())) {
+                currentDate = newDate;
+                updateTime();
+            }
+        };
+
+        document.getElementById('date-picker').onchange = (e) => {
+            if (!e.target.value) return;
+            const newDate = new Date(e.target.value);
+
+            if (!isNaN(newDate.getTime())) {
+                currentDate = newDate;
+                const pct = ((currentDate.getTime() - START_DATE) / (END_DATE - START_DATE)) * 100;
+                document.getElementById('timeline-slider').value = pct;
+                updateTime();
+            }
+        };
+
+
+        let playSpeed = 1;
+
+        document.getElementById('btn-speed').onclick = () => {
+            const speeds = [1, 2, 5, 10];
+            let idx = speeds.indexOf(playSpeed);
+            playSpeed = speeds[(idx + 1) % speeds.length];
+            document.getElementById('btn-speed').innerText = playSpeed + 'x';
+
+            if (isPlaying) {
+                clearInterval(playInterval);
+                startPlayback();
+            }
+        };
+
+        function startPlayback() {
+            playInterval = setInterval(() => {
+                const slider = document.getElementById('timeline-slider');
+                let val = parseFloat(slider.value) + (0.05 * playSpeed);
+                if (val >= 100) val = 0;
+                slider.value = val;
+
+                const pct = val / 100;
+                const newTime = START_DATE + pct * (END_DATE - START_DATE);
+                currentDate = new Date(newTime);
+                updateTime();
+            }, 50);
+        }
+
+        document.getElementById('btn-play').onclick = () => {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('btn-play');
+            if (isPlaying) {
+                btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>`;
+                btn.classList.replace('bg-blue-600', 'bg-red-600');
+                playInterval = setInterval(() => {
+                    const slider = document.getElementById('timeline-slider');
+                    let val = parseFloat(slider.value) + 0.1;
+                    if (val >= 100) val = 0;
+                    slider.value = val;
+
+                    const pct = val / 100;
+                    const newTime = START_DATE + pct * (END_DATE - START_DATE);
+                    currentDate = new Date(newTime);
+                    updateTime();
+                }, 50);
+            } else {
+                btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>`;
+                btn.classList.replace('bg-red-600', 'bg-blue-600');
+                clearInterval(playInterval);
+            }
+        };
+
+        document.getElementById('btn-back').onclick = () => {
+            selectedCarrierId = null;
+            document.getElementById('carrier-details').classList.add('hidden');
+            renderCarrierList();
+            updateMarkers();
+        };
+
+
+        document.getElementById('btn-sync-osint').onclick = async function () {
+            const btn = this;
+            if (btn.disabled) return;
+
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Step 1
+            btn.innerHTML = `<svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Conectando satélites ICEYE...</span>`;
+
+            await new Promise(r => setTimeout(r, 1200));
+
+            // Step 2
+            btn.innerHTML = `<svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Procesando feed militar global...</span>`;
+
+            await new Promise(r => setTimeout(r, 1500));
+
+            // Step 3
+            btn.innerHTML = `<svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> <span>Auditando rutinas tácticas: ${CARRIERS.reduce((acc, c) => acc + c.history.length, 0)} Ops...</span>`;
+
+            await new Promise(r => setTimeout(r, 1800));
+
+            // Finalize
+            renderCarrierList();
+            updateMarkers();
+            updateFleetStats();
+
+            btn.classList.remove('bg-blue-600', 'hover:bg-blue-500', 'border-blue-400/30');
+            btn.classList.add('bg-emerald-600', 'border-emerald-400');
+            btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> <span class="tracking-tight text-[11px]">Inteligencia OSINT Sincronizada</span>`;
+
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                btn.classList.add('bg-blue-600', 'hover:bg-blue-500', 'border-blue-400/30');
+                btn.classList.remove('bg-emerald-600', 'border-emerald-400', 'opacity-75', 'cursor-not-allowed');
+                btn.disabled = false;
+            }, 3500);
+        };
+
+        // Fin de listeners
+
+        document.getElementById('carrier-search').oninput = (e) => {
+            searchQuery = e.target.value;
+            renderCarrierList();
+        };
+
+        document.getElementById('toggle-satellite').onclick = () => {
+            isSatellite = !isSatellite;
+            if (isSatellite) { map.removeLayer(darkLayer); satelliteLayer.addTo(map); }
+            else { map.removeLayer(satelliteLayer); darkLayer.addTo(map); }
+        };
+
+        document.getElementById('btn-update').onclick = () => {
+            const btn = document.getElementById('btn-update');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = `<svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Localizando...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                END_DATE = new Date().getTime();
+                currentDate = new Date(END_DATE);
+                document.getElementById('timeline-slider').value = 100;
+                document.getElementById('date-picker').max = formatLocalDateString(new Date());
+                updateTime();
+
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }, 1200);
+        };
+
+        window.onload = () => {
+            document.getElementById('date-picker').max = formatLocalDateString(new Date());
+            updateTime();
+        };
+    </script>
+</body>
+
+</html>
