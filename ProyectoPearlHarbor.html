@@ -1216,9 +1216,14 @@
             updateMarkers();
         });
 
-        document.getElementById('btn-close-wiki').onclick = () => {
-            document.getElementById('wiki-modal').classList.add('hidden');
-        };
+        window.addEventListener('DOMContentLoaded', () => {
+            const btnCloseWiki = document.getElementById('btn-close-wiki');
+            if (btnCloseWiki) {
+                btnCloseWiki.onclick = () => {
+                    document.getElementById('wiki-modal').classList.add('hidden');
+                };
+            }
+        });
 
         document.getElementById('toggle-satellite').onclick = () => {
             isSatellite = !isSatellite;
