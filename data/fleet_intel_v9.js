@@ -480,6 +480,25 @@ const WIKI_SPECS = {
     }
 };
 
+const GLOBAL_OSINT_SOURCES = {
+    "AIS / Tráfico Marítimo": [
+        { name: "MarineTraffic", url: "https://www.marinetraffic.com/", desc: "Visualización en tiempo real de tráfico mundial y datos AIS." },
+        { name: "VesselFinder", url: "https://www.vesselfinder.com/", desc: "Histórico y tiempo real para rastreo de buques logísticos y escoltas." },
+        { name: "Cruising Earth", url: "https://www.cruisingearth.com/military-ship-tracker/", desc: "Agregador gratuito de posiciones y despliegues militares globales." }
+    ],
+    "Institutos & Bases de Datos": [
+        { name: "USNI Fleet Tracker", url: "https://news.usni.org/category/fleet-tracker", desc: "Mapas semanales con las estimaciones más precisas de la US Navy." },
+        { name: "Go! Navy", url: "http://www.gonavy.jp/CVLocation.html", desc: "Base de datos histórica inigualable de portaaviones de EE. UU." },
+        { name: "Stratfor / RANE", url: "https://worldview.stratfor.com/topic/tracking-us-naval-power", desc: "Informes de inteligencia sobre proyección de poder naval global." },
+        { name: "CSIS / AMTI", url: "https://amti.csis.org/", desc: "Rastreo crítico del Indo-Pacífico y milicia marítima china." },
+        { name: "IISS Military Balance", url: "https://www.iiss.org/the-military-balance-plus/", desc: "Auditoría de capacidades e inventarios de 170 países." }
+    ],
+    "Inteligencia Satelital (SAR)": [
+        { name: "ICEYE SAR", url: "https://www.iceye.com/sar-maritime-awareness", desc: "Detección de flotas en mar abierto con radar de apertura sintética." },
+        { name: "Capella Space", url: "https://www.capellaspace.com/", desc: "Imágenes SAR de alta resolución para monitoreo de bases y costas." }
+    ]
+};
+
 const CARRIERS = [
     {
         "id": "cvn68",

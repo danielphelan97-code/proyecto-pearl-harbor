@@ -225,7 +225,7 @@
                     </div>
 
                     <!-- Botón de Actualizar OSINT -->
-                    <button id="btn-sync-osint"
+                    <button id="btn-sync-osint" onclick="syncOSINT(this)"
                         class="w-full mt-3 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-3 rounded shadow-lg shadow-blue-500/20 transition-all duration-300 flex items-center justify-center gap-2 text-xs tracking-widest uppercase border border-blue-400/30 group">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="h-4 w-4 group-hover:rotate-180 transition-transform duration-500" fill="none"
@@ -234,6 +234,15 @@
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
                         Actualizar Inteligencia
+                    </button>
+
+                    <!-- Botón Centro de Inteligencia Global -->
+                    <button id="btn-osint-center" onclick="toggleOSINTCenter()"
+                        class="w-full bg-slate-800 hover:bg-slate-700 text-blue-400 font-bold py-2 px-3 rounded shadow-lg transition-all duration-300 flex items-center justify-center gap-2 text-[10px] tracking-[0.2em] uppercase border border-blue-500/20 group mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-500 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                        Centro de Inteligencia Global
                     </button>
 
                 </div>
@@ -1422,6 +1431,59 @@
                 console.log("OSINT Console: Sistemas en línea. Flota localizada.");
             }, 300);
         };
+
+         // --- GLOBAL OSINT CENTER LOGIC ---
+         function toggleOSINTCenter() {
+             const modal = document.getElementById('osint-center-modal');
+             const container = document.getElementById('osint-sources-container');
+             
+             if (modal.classList.contains('hidden')) {
+                 // Llenar datos si no están cargados
+                 container.innerHTML = '';
+                 for (const [category, sources] of Object.entries(GLOBAL_OSINT_SOURCES)) {
+                     const section = document.createElement('div');
+                     section.className = 'col-span-1 md:col-span-2 lg:col-span-3 mt-4 first:mt-0';
+                     section.innerHTML = `<h3 class="text-blue-500 font-black text-xs uppercase tracking-[0.2em] border-b border-blue-900/30 pb-2 mb-4">${category}</h3>`;
+                     container.appendChild(section);
+                     
+                     sources.forEach(s => {
+                         const card = document.createElement('a');
+                         card.href = s.url;
+                         card.target = "_blank";
+                         card.className = "bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 hover:bg-blue-900/20 hover:border-blue-500/30 transition-all group flex flex-col justify-between h-full";
+                         card.innerHTML = `
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="text-lg font-black text-white group-hover:text-blue-400 transition-colors uppercase tracking-tighter">${s.name}</h4>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-600 group-hover:text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed font-medium mb-4">${s.desc}</p>
+                            </div>
+                            <div class="text-[9px] font-mono text-blue-500/60 font-bold tracking-widest uppercase">Acceder al Portal OSINT ›</div>
+                         `;
+                         container.appendChild(card);
+                     });
+                 }
+                 modal.classList.remove('hidden');
+             } else {
+                 modal.classList.add('hidden');
+             }
+         }
+
+         async function syncOSINT(btn) {
+             const originalHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:rotate-180 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> Actualizar Inteligencia`;
+             btn.innerHTML = `<svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Sincronizando...`;
+             btn.disabled = true;
+             
+             // Simular sincronización masiva con el nuevo v11.5
+             setTimeout(() => {
+                 btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Todo Sincronizado`;
+                 setTimeout(() => {
+                     btn.innerHTML = originalHtml;
+                     btn.disabled = false;
+                 }, 1200);
+             }, 1500);
+         }
     </script>
     
     <!-- WIKI MODAL -->
@@ -1484,6 +1546,37 @@
                         <!-- Generado por JavaScript -->
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GLOBAL OSINT CENTER MODAL -->
+    <div id="osint-center-modal" class="hidden fixed inset-0 z-[3000] bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative bg-slate-900 border border-blue-500/30 shadow-[0_0_100px_rgba(30,58,138,0.4)] max-w-4xl w-full rounded-2xl overflow-hidden flex flex-col max-h-[85vh]">
+            <!-- Header -->
+            <div class="p-6 bg-slate-950 border-b border-blue-900/40 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-blue-600/10 rounded-xl border border-blue-500/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2 2 2 0 012 2v.1c0 1.1.9 2 2 2h2.5m-2.704-12.03a10 10 0 11-13.765 13.765" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black text-white tracking-tighter uppercase">Directorio de Inteligencia Global</h2>
+                        <p class="text-[10px] text-blue-400 font-mono uppercase tracking-[0.3em]">Servicios de Rastreo AIS, Satelital y Geopolítico</p>
+                    </div>
+                </div>
+                <button onclick="toggleOSINTCenter()" class="p-2 hover:bg-slate-800 rounded-full transition-colors text-slate-500 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <!-- Content -->
+            <div id="osint-sources-container" class="p-8 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+                <!-- Generado por JS -->
+            </div>
+            <!-- Footer -->
+            <div class="p-4 bg-slate-950/80 border-t border-slate-800 text-center">
+                <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">Nota: Los portaaviones pueden operar con transpondedores desactivados. Utilice estos agregadores para rastrear buques de escolta y logística auxiliares.</p>
             </div>
         </div>
     </div>
