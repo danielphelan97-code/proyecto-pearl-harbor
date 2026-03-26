@@ -774,6 +774,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2020-02-15",
+                "lat": 36.9,
+                "lng": -76.3,
+                "name": "Norfolk",
+                "status": "Desplegado",
+                "op": "Despliegue COVID",
+                "desc": "Despliegue récord de 206 días seguidos en el mar sin escalas en puerto debido a protocolos sanitarios.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2020-02-20",
                 "lat": 15,
                 "lng": 60,
@@ -815,6 +830,21 @@ const CARRIERS = [
                     {
                         "name": "DoD Operations",
                         "url": "https://www.defense.gov/News/Releases/Release/Article/2559092/"
+                    }
+                ]
+            },
+            {
+                "date": "2023-10-14",
+                "lat": 12,
+                "lng": 43,
+                "name": "Estrecho de Bab al-Mandab",
+                "status": "Desplegado",
+                "op": "O.P. Prosperity Guardian",
+                "desc": "Interceptación activa de misiles balísticos y drones hutíes atacando el tráfico comercial.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
                     }
                 ]
             },
@@ -889,6 +919,21 @@ const CARRIERS = [
                 "sources": [
                     {
                         "name": "Naval Sea Systems Command",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2025-01-10",
+                "lat": 36.9,
+                "lng": -76.3,
+                "name": "Norfolk",
+                "status": "Mantenimiento",
+                "op": "PIA (Astilleros)",
+                "desc": "Ingreso en dique seco tras 9 meses de combate intenso en el Mar Rojo.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
                         "url": "#"
                     }
                 ]
@@ -1101,6 +1146,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2026-03-01",
+                "lat": 32.7,
+                "lng": -117.19,
+                "name": "NAS North Island, San Diego",
+                "status": "En Puerto",
+                "op": "Mantenimiento Programado",
+                "desc": "Pierside tras el despliegue de 2025; ciclo de mantenimiento y descanso de tripulación.",
+                "sources": [
+                    {
+                        "name": "OSINT Intelligence",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2026-03-24",
                 "lat": 18,
                 "lng": 132,
@@ -1115,7 +1175,8 @@ const CARRIERS = [
                     }
                 ]
             }
-        ]
+        ],
+        "status": "En Puerto"
     },
     {
         "id": "cvn71",
@@ -1139,6 +1200,21 @@ const CARRIERS = [
                     {
                         "name": "San Diego CA Cams",
                         "url": "https://www.sandiegouniontribune.com/2020/01/17/aircraft-carrier-uss-theodore-roosevelt-departs-san-diego-for-deployment/"
+                    }
+                ]
+            },
+            {
+                "date": "2020-03-24",
+                "lat": 13.4,
+                "lng": 144.7,
+                "name": "Guam",
+                "status": "Aislado",
+                "op": "Crisis Sanitaria",
+                "desc": "Atracado en Guam tras brote masivo de COVID-19 en la tripulación y relevo del Capitán Crozier.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
                     }
                 ]
             },
@@ -1169,6 +1245,21 @@ const CARRIERS = [
                     {
                         "name": "Navy PAO",
                         "url": "https://www.navy.mil/Press-Office/News-Stories/Article/2269557/uss-theodore-roosevelt-returns-from-deployment/"
+                    }
+                ]
+            },
+            {
+                "date": "2021-01-23",
+                "lat": 15,
+                "lng": 115,
+                "name": "Mar de China Meridional",
+                "status": "Desplegado",
+                "op": "Libertad de Navegación",
+                "desc": "Operaciones de ala fija para asegurar el libre tránsito en aguas internacionales en disputa.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
                     }
                 ]
             },
@@ -1258,6 +1349,21 @@ const CARRIERS = [
                 "sources": [
                     {
                         "name": "INDOPACOM",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2026-03-20",
+                "lat": 32.7,
+                "lng": -117.19,
+                "name": "NAS North Island",
+                "status": "En Puerto",
+                "op": "Alistamiento Crítico",
+                "desc": "Preparativos finales para despliegue de emergencia hacia el Mediterráneo.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
                         "url": "#"
                     }
                 ]
@@ -1365,6 +1471,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2024-08-11",
+                "lat": 15,
+                "lng": 60,
+                "name": "Mar Arábigo",
+                "status": "Desplegado",
+                "op": "Epic Fury Prep",
+                "desc": "Rápido tránsito desde el Pacífico para reforzar el CENTCOM.",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2024-10-15",
                 "lat": 24,
                 "lng": 59,
@@ -1424,7 +1545,8 @@ const CARRIERS = [
                     }
                 ]
             }
-        ]
+        ],
+        "status": "Desplegado"
     },
     {
         "id": "cvn73",
@@ -1497,6 +1619,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2026-03-10",
+                "lat": 35.29,
+                "lng": 139.67,
+                "name": "Yokosuka, Japón",
+                "status": "En Puerto",
+                "op": "Fuerza Desplegada (FDNF-J)",
+                "desc": "Asume oficialmente el rol de portaaviones de respuesta inmediata en el Pacífico Occidental tras relevar al USS Ronald Reagan.",
+                "sources": [
+                    {
+                        "name": "OSINT Intelligence",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2026-03-13",
                 "lat": 35.288,
                 "lng": 139.658,
@@ -1510,23 +1647,9 @@ const CARRIERS = [
                         "url": "https://planet.com/"
                     }
                 ]
-            },
-            {
-                "date": "2026-03-22",
-                "lat": 18,
-                "lng": 132,
-                "name": "Mar de Filipinas",
-                "status": "Desplegado",
-                "op": "Defensa Nipona Activa",
-                "desc": "Tras el reporte USNI (Destroyer USS Mustin replacement), asume control activo liderando escuadras japonesas e internacionales frente a intrusiones de zona.",
-                "sources": [
-                    {
-                        "name": "AutoOSINT: USNI News",
-                        "url": "https://news.usni.org/2026/03/13/destroyer-uss-mustin-to-replace-cruiser-uss-robert-smalls-in-japan"
-                    }
-                ]
             }
-        ]
+        ],
+        "status": "En Puerto"
     },
     {
         "id": "cvn78",
@@ -1689,36 +1812,37 @@ const CARRIERS = [
                 ]
             },
             {
-                "date": "2026-03-24",
-                "lat": 35.495,
-                "lng": 24.175,
-                "name": "NSA Souda Bay (Marathi Pier)",
-                "status": "En Puerto",
-                "op": "Operación Epic Fury (2026 Actual)",
-                "desc": "Coordinación de ataques de precisión con cazas F-35C sobre Teherán.",
+                "date": "2026-03-23",
+                "lat": 35.49,
+                "lng": 24.08,
+                "name": "NSA Souda Bay, Creta",
+                "status": "Averiado",
+                "op": "Avería Crítica (Post-Incendio)",
+                "desc": "Atracado de emergencia tras incendio en la cubierta de lavandería el 12 de marzo. Reparaciones de casco y habitabilidad en curso.",
                 "sources": [
                     {
-                        "name": "USNI News",
+                        "name": "OSINT Intelligence",
                         "url": "#"
                     }
                 ]
             },
             {
                 "date": "2026-03-24",
-                "lat": 26,
-                "lng": 52,
-                "name": "Golfo Pérsico",
-                "status": "Desplegado",
-                "op": "Operación Epic Fury (2026 Actual)",
-                "desc": "Coordinación de ataques de precisión con cazas F-35C sobre Teherán.",
+                "lat": 35.495,
+                "lng": 24.175,
+                "name": "NSA Souda Bay (Marathi Pier)",
+                "status": "Averiado",
+                "op": "Operación Epic Fury (Reparaciones)",
+                "desc": "Capacidad de combate reducida; coordinación de ataques remotos mientras se restauran sistemas críticos.",
                 "sources": [
                     {
-                        "name": "OSINT Defense Record",
+                        "name": "USNI News",
                         "url": "#"
                     }
                 ]
             }
-        ]
+        ],
+        "status": "Averiado / Reparación"
     },
     {
         "id": "cdg91",
@@ -2349,6 +2473,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2021-05-06",
+                "lat": 37,
+                "lng": -76.4,
+                "name": "Newport News",
+                "status": "Mantenimiento",
+                "op": "RCOH (Media Vida)",
+                "desc": "Inicio del proceso de recarga de combustible nuclear y modernización total; estimado hasta finales de 2026.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2021-05-15",
                 "lat": 36.985,
                 "lng": -76.442,
@@ -2481,6 +2620,36 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2024-12-05",
+                "lat": 26,
+                "lng": 34,
+                "name": "Mar Rojo",
+                "status": "Desplegado",
+                "op": "O.P. Inherent Resolve",
+                "desc": "Tránsito del Canal de Suez y ataques contra milicias pro-iraníes en apoyo a la estabilidad regional.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2026-03-22",
+                "lat": 36.9,
+                "lng": -76.3,
+                "name": "Norfolk",
+                "status": "En Puerto",
+                "op": "Preparación RCOH",
+                "desc": "Ciclo final de operaciones antes de su desactivación para recarga nuclear prevista en junio 2026.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2026-03-24",
                 "lat": 36.953,
                 "lng": -76.33,
@@ -2598,6 +2767,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2025-01-15",
+                "lat": 47.5,
+                "lng": -122.6,
+                "name": "Bremerton",
+                "status": "Mantenimiento",
+                "op": "DPIA (Gran Escala)",
+                "desc": "Inicia periodo de dique seco de 17 meses tras relevar su puesto en Japón.",
+                "sources": [
+                    {
+                        "name": "OSINT Record",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2025-06-20",
                 "lat": 47.556,
                 "lng": -122.636,
@@ -2665,6 +2849,36 @@ const CARRIERS = [
                 "sources": [
                     {
                         "name": "USNI News",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2020-08-30",
+                "lat": 37,
+                "lng": -76.4,
+                "name": "Newport News",
+                "status": "Mantenimiento",
+                "op": "DPIA",
+                "desc": "Salida del dique seco tras 28 meses de reparaciones estructurales.",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2022-08-10",
+                "lat": 34,
+                "lng": 25,
+                "name": "Mediterráneo",
+                "status": "Desplegado",
+                "op": "Neptune Strike",
+                "desc": "Liderando ejercicios de alta intensidad con la OTAN en respuesta a la crisis europea.",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
                         "url": "#"
                     }
                 ]
@@ -2739,6 +2953,21 @@ const CARRIERS = [
                 "sources": [
                     {
                         "name": "OSINT Fleet Tracker",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2026-03-25",
+                "lat": 36.9,
+                "lng": -76.3,
+                "name": "Norfolk",
+                "status": "En Puerto",
+                "op": "Despliegue Inminente",
+                "desc": "Alistamiento final para zarpar hacia el Mediterráneo Oriental (Epic Fury).",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
                         "url": "#"
                     }
                 ]
@@ -3269,6 +3498,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2020-06-15",
+                "lat": 35.719,
+                "lng": 119.982,
+                "name": "Base Naval de Qingdao (PLAN)",
+                "status": "Operativo",
+                "op": "Operaciones COVID",
+                "desc": "Patrullas de soberanía restringidas por protocolos de pandemia mundial.",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2021-04-03",
                 "lat": 18,
                 "lng": 132,
@@ -3324,6 +3568,21 @@ const CARRIERS = [
                 "sources": [
                     {
                         "name": "Janes",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2023-11-20",
+                "lat": 35.719,
+                "lng": 119.982,
+                "name": "Base Naval de Qingdao (PLAN)",
+                "status": "Operativo",
+                "op": "Misión Disuasión",
+                "desc": "Ejercicios regionales para asegurar la estabilidad de las líneas de comunicación marítima.",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
                         "url": "#"
                     }
                 ]
@@ -3446,6 +3705,21 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2020-06-15",
+                "lat": 38.932,
+                "lng": 121.642,
+                "name": "Astillero Dalian, Liaoning",
+                "status": "Operativo",
+                "op": "Operaciones COVID",
+                "desc": "Patrullas de soberanía restringidas por protocolos de pandemia mundial.",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
                 "date": "2020-12-20",
                 "lat": 24.5,
                 "lng": 119.5,
@@ -3531,6 +3805,21 @@ const CARRIERS = [
                 "sources": [
                     {
                         "name": "Japan MoD",
+                        "url": "#"
+                    }
+                ]
+            },
+            {
+                "date": "2023-11-20",
+                "lat": 38.932,
+                "lng": 121.642,
+                "name": "Astillero Dalian, Liaoning",
+                "status": "Operativo",
+                "op": "Misión Disuasión",
+                "desc": "Ejercicios regionales para asegurar la estabilidad de las líneas de comunicación marítima.",
+                "sources": [
+                    {
+                        "name": "OSINT Historical Archive",
                         "url": "#"
                     }
                 ]
@@ -4322,4 +4611,4 @@ const CARRIERS = [
     }
 ];
 
-console.log('--- OSINT INTEL v10.0 DEFINITIVE LOADED ---');
+console.log('--- OSINT INTEL v11.0 FINAL ---');

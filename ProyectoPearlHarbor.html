@@ -416,8 +416,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
-    <!-- CORE DATA - Consolidado Intelligence Phase 4 (v10.0) -->
-    <script src="data/fleet_intel_v9.js?v=10.0"></script>
+    <!-- CORE DATA - Consolidado Intelligence Phase 5 (v11.0) -->
+    <script src="data/fleet_intel_v9.js?v=11.0"></script>
     <script>
         const START_DATE = new Date("2020-01-01").getTime();
         let END_DATE = new Date().getTime(); // Dinámico, verdaderamente la fecha del ordenador
@@ -821,14 +821,20 @@
                     const listHtml = carriersList.map(c => {
                         const state = getCarrierStateAtDate(c, currentDate);
                         const isActive = selectedCarrierId === c.id;
-                        let statusColor = "bg-blue-500";
-                        if (state.status === "Desplegado") statusColor = "bg-red-500";
-                        if (state.status === "Mantenimiento") statusColor = "bg-slate-500";
+                        
+                        let statusColor = "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]";
+                        if (state.status.includes("Averiado")) statusColor = "bg-orange-600 animate-pulse shadow-[0_0_12px_rgba(234,88,12,0.6)]";
+                        else if (state.status.includes("Puerto") || state.status.includes("Mantenimiento")) statusColor = "bg-yellow-500";
+                        else if (state.status.includes("No Operativo")) statusColor = "bg-red-600";
+                             
+                        const cleanThumb = c.photo ? c.photo.replace(/^https?:\/\//, '') : "";
+                        const proxyUrl = cleanThumb ? `https://wsrv.nl/?url=${cleanThumb}&w=100&q=70&output=webp` : "";
+                        
                         return `<div class="p-2 ml-2 rounded-lg border cursor-pointer transition-all flex items-center justify-between group ${isActive ? 'bg-blue-600/20 border-blue-500 shadow-lg' : 'bg-slate-900/40 border-slate-800 hover:border-slate-600'}" onclick="selectCarrier('${c.id}')">
                             <div class="flex items-center gap-3 overflow-hidden">
                                 <div class="w-1.5 h-10 ${statusColor} rounded-full shrink-0"></div>
                                 <div class="w-12 h-10 bg-slate-800 rounded overflow-hidden shrink-0 border border-slate-700">
-                                    <img src="${c.photo}" alt="${c.hull}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" referrerpolicy="no-referrer" onload="this.style.opacity='1'" onerror="this.referrerPolicy='no-referrer'; this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?w=100&q=50'">
+                                    <img src="${proxyUrl}" alt="${c.hull}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" referrerpolicy="no-referrer" onload="this.style.opacity='1'" onerror="this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?w=100&q=50'">
                                 </div>
                                 <div class="truncate">
                                     <p class="text-xs font-black text-white">${c.hull}</p>
@@ -1028,24 +1034,25 @@
 
             const loadPhoto = (url) => {
                 photoEl.style.opacity = '0';
-                photoEl.referrerPolicy = "no-referrer"; // FORZADO JS
                 photoEl.src = '';
                 photoEl.onerror = null;
                 
                 if (url) {
-                    console.log("OSINT Image Load:", url);
+                    // Optimized Proxy (wsrv.nl is the newer/faster alias)
+                    // Removing https:// to avoid nested protocol issues
+                    const cleanUrl = url.replace(/^https?:\/\//, '');
+                    const proxiedDetail = `https://wsrv.nl/?url=${cleanUrl}&q=80&output=webp`;
+                    
+                    console.log("OSINT Proxied Load:", proxiedDetail);
                     photoEl.onerror = () => {
-                        console.warn("OSINT Image Blocked/Error. Using Fallback.");
-                        photoEl.onerror = null;
-                        photoEl.referrerPolicy = "no-referrer";
+                        console.warn("Proxy Failed. Using Fallback.");
                         photoEl.src = fallbackSvg;
                         photoEl.style.opacity = '1';
                     };
                     photoEl.onload = () => { 
-                        console.log("OSINT Image Success");
                         photoEl.style.opacity = '1'; 
                     };
-                    photoEl.src = url;
+                    photoEl.src = proxiedDetail;
                 } else {
                     photoEl.src = fallbackSvg;
                     photoEl.style.opacity = '1';
