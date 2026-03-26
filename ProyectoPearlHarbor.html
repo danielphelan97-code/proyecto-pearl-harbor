@@ -416,8 +416,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
-    <!-- CORE DATA - Consolidado Intelligence Phase 4 (v9.5) -->
-    <script src="data/fleet_intel_v9.js?v=9.5"></script>
+    <!-- CORE DATA - Consolidado Intelligence Phase 4 (v10.0) -->
+    <script src="data/fleet_intel_v9.js?v=10.0"></script>
     <script>
         const START_DATE = new Date("2020-01-01").getTime();
         let END_DATE = new Date().getTime(); // Dinámico, verdaderamente la fecha del ordenador
@@ -828,7 +828,7 @@
                             <div class="flex items-center gap-3 overflow-hidden">
                                 <div class="w-1.5 h-10 ${statusColor} rounded-full shrink-0"></div>
                                 <div class="w-12 h-10 bg-slate-800 rounded overflow-hidden shrink-0 border border-slate-700">
-                                    <img src="${c.photo}" alt="${c.hull}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" referrerpolicy="no-referrer" onerror="this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?w=100&q=50'">
+                                    <img src="${c.photo}" alt="${c.hull}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" referrerpolicy="no-referrer" onload="this.style.opacity='1'" onerror="this.referrerPolicy='no-referrer'; this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?w=100&q=50'">
                                 </div>
                                 <div class="truncate">
                                     <p class="text-xs font-black text-white">${c.hull}</p>
@@ -1027,15 +1027,24 @@
             const fallbackSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%230f172a'/%3E%3Ctext x='50%25' y='45%25' text-anchor='middle' fill='%23334155' font-family='monospace' font-size='24' font-weight='bold' opacity='0.3'%3E${carrier.hull}%3C/text%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' fill='%23475569' font-family='monospace' font-size='12'%3EFOTO NO DISPONIBLE%3C/text%3E%3C/svg%3E`;
 
             const loadPhoto = (url) => {
+                photoEl.style.opacity = '0';
+                photoEl.referrerPolicy = "no-referrer"; // FORZADO JS
                 photoEl.src = '';
                 photoEl.onerror = null;
+                
                 if (url) {
+                    console.log("OSINT Image Load:", url);
                     photoEl.onerror = () => {
+                        console.warn("OSINT Image Blocked/Error. Using Fallback.");
                         photoEl.onerror = null;
+                        photoEl.referrerPolicy = "no-referrer";
                         photoEl.src = fallbackSvg;
                         photoEl.style.opacity = '1';
                     };
-                    photoEl.onload = () => { photoEl.style.opacity = '1'; };
+                    photoEl.onload = () => { 
+                        console.log("OSINT Image Success");
+                        photoEl.style.opacity = '1'; 
+                    };
                     photoEl.src = url;
                 } else {
                     photoEl.src = fallbackSvg;
