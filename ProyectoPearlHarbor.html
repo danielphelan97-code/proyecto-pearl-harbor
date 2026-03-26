@@ -416,8 +416,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
-    <!-- CORE DATA - Consolidado Intelligence Phase 4 (v9.0) -->
-    <script src="data/fleet_intel_v9.js?v=9.0"></script>
+    <!-- CORE DATA - Consolidado Intelligence Phase 4 (v9.5) -->
+    <script src="data/fleet_intel_v9.js?v=9.5"></script>
     <script>
         const START_DATE = new Date("2020-01-01").getTime();
         let END_DATE = new Date().getTime(); // Dinámico, verdaderamente la fecha del ordenador
@@ -828,7 +828,7 @@
                             <div class="flex items-center gap-3 overflow-hidden">
                                 <div class="w-1.5 h-10 ${statusColor} rounded-full shrink-0"></div>
                                 <div class="w-12 h-10 bg-slate-800 rounded overflow-hidden shrink-0 border border-slate-700">
-                                    <img src="${c.photo}" alt="${c.hull}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?w=100&q=50'">
+                                    <img src="${c.photo}" alt="${c.hull}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" referrerpolicy="no-referrer" onerror="this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?w=100&q=50'">
                                 </div>
                                 <div class="truncate">
                                     <p class="text-xs font-black text-white">${c.hull}</p>
@@ -1005,6 +1005,10 @@
         function selectCarrier(id) {
             selectedCarrierId = id;
             const carrier = CARRIERS.find(c => c.id === id);
+            if (!carrier) {
+                console.error("Fuerza de inteligencia: Buque no identificado con ID:", id);
+                return;
+            }
             const state = getCarrierStateAtDate(carrier, currentDate);
             
             // Llenar datos de cabecera en el panel lateral
@@ -1411,7 +1415,7 @@
             
             <!-- Hero Banner Dinámico Fotográfico -->
             <div class="w-full h-56 sm:h-72 bg-slate-800 relative shrink-0 overflow-hidden">
-                <img id="wiki-photo" alt="OSINT Photo" class="w-full h-full object-cover block">
+                <img id="wiki-photo" alt="OSINT Photo" class="w-full h-full object-cover block" referrerpolicy="no-referrer">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                 <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
                     <div class="flex items-center gap-3 bg-black/60 px-3 py-1.5 rounded border border-red-900/50 backdrop-blur-md shadow-lg">

@@ -449,35 +449,7 @@ const CARRIERS = [
         { date: "2025-11-20", ...LOCATIONS.indian_ocean, status: "Desplegado", op: "Twin Strike Táctica", desc: "Participa en formación junto al Vikramaditya, demostrando capacidad de dos portaviones nacionales.", sources: [{ name: "Mint Defense", url: "#" }] },
         { date: "2026-03-16", ...LOCATIONS.karwar, status: "En Puerto", op: "Entrenamiento Rafale", desc: "Alistando cubiertas para recibir el escuadrón inicial de los Dassault Rafale M comprados a Francia.", sources: [{ name: "OSINT IND", url: "#" }] }
     ]}
-    ,
-    { id: "liaoning", name: "Liaoning", hull: "16", cls: "Type 001", country: "China", photo: "https://upload.wikimedia.org/wikipedia/commons/7/77/Liaoning_CV-16.jpg", launched: "1988-11-25", commissioned: "2012-09-25", history: [
-        { date: "2026-03-24", ...LOCATIONS.philippine_sea, status: "Desplegado", op: "Patrulla Mar de China", desc: "Operando en el Mar de China Meridional.", sources: [{ name: "PLAN Press", url: "#" }] }
-    ]},
-    { id: "shandong", name: "Shandong", hull: "17", cls: "Type 002", country: "China", photo: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Shandong_CV-17.jpg", launched: "2017-04-26", commissioned: "2019-12-17", history: [
-        { date: "2026-03-24", ...LOCATIONS.east_china_sea, status: "Desplegado", op: "Ejercicios de Flota", desc: "Realizando maniobras de ala fija en el Estrecho.", sources: [{ name: "OSINT CN", url: "#" }] }
-    ]},
-    { id: "fujian", name: "Fujian", hull: "18", cls: "Type 003", country: "China", photo: "https://upload.wikimedia.org/wikipedia/commons/2/23/Fujian_carrier.jpg", launched: "2022-06-17", commissioned: "2025-06-15", history: [
-        { date: "2026-03-24", ...LOCATIONS.east_china_sea, status: "Mantenimiento", op: "Pruebas Tempranas", desc: "Puerto base en Jiangnan; fase final de integración.", sources: [{ name: "PLAN News", url: "#" }] }
-    ]},
-    { id: "queen_elizabeth", name: "HMS Queen Elizabeth", hull: "R08", cls: "Clase Queen Elizabeth", country: "Reino Unido", photo: "https://upload.wikimedia.org/wikipedia/commons/9/9c/HMS_Queen_Elizabeth.jpg", launched: "2014-07-04", commissioned: "2017-12-07", history: [
-        { date: "2026-03-24", ...LOCATIONS.portsmouth, status: "En Puerto", op: "Alistamiento", desc: "En Portsmouth recargando suministros para patrulla norte.", sources: [{ name: "Royal Navy", url: "#" }] }
-    ]},
-    { id: "prince_of_wales", name: "HMS Prince of Wales", hull: "R09", cls: "Clase Queen Elizabeth", country: "Reino Unido", photo: "https://upload.wikimedia.org/wikipedia/commons/5/52/HMS_Prince_of_Wales_R09.jpg", launched: "2017-12-21", commissioned: "2019-12-10", history: [
-        { date: "2026-03-24", ...LOCATIONS.atlantic_north, status: "Desplegado", op: "Patrulla NATO", desc: "Liderando grupo de combate en el Mar del Norte.", sources: [{ name: "Royal Navy", url: "#" }] }
-    ]},
-    { id: "charles_de_gaulle", name: "Charles de Gaulle", hull: "R91", cls: "Clase Charles de Gaulle", country: "Francia", photo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Charles_de_Gaulle_R91.jpg", launched: "1994-05-07", commissioned: "2001-05-18", history: [
-        { date: "2026-03-24", ...LOCATIONS.toulon, status: "En Puerto", op: "Mantenimiento", desc: "Mantenimiento preventivo en Toulon.", sources: [{ name: "Marine Nationale", url: "#" }] }
-    ]},
-    { id: "cavour", name: "MM Cavour", hull: "C 550", cls: "Clase Cavour", country: "Italia", photo: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Cavour_C550.jpg", launched: "2004-07-20", commissioned: "2008-06-10", history: [
-        { date: "2026-03-24", ...LOCATIONS.med_sea, status: "Desplegado", op: "Flota Mediterránea", desc: "Operaciones de ala fija F-35B en el Tirreno.", sources: [{ name: "Marina Militare", url: "#" }] }
-    ]},
-    { id: "garibaldi", name: "ITS Giuseppe Garibaldi", hull: "C 551", cls: "Clase Garibaldi", country: "Italia/Indonesia", photo: "https://upload.wikimedia.org/wikipedia/commons/b/bd/ITS_Giuseppe_Garibaldi_C_551.jpg", launched: "1983-06-04", commissioned: "1985-09-30", history: [
-        { date: "2025-12-31", ...LOCATIONS.med_sea, status: "Retirado", op: "Baja MMI", desc: "Retirado oficialmente por la Marina Italiana.", sources: [{ name: "Marina Militare", url: "#" }] },
-        { date: "2026-03-24", ...LOCATIONS.med_sea, status: "En Tránsito", op: "Transferencia Indonesia", desc: "En proceso de transferencia a Indonesia como donación; uso humanitario.", sources: [{ name: "Analisis Defensa", url: "#" }] }
-    ]},
-    { id: "juan_carlos", name: "Juan Carlos I", hull: "L-61", cls: "Clase Juan Carlos I", country: "España", photo: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Juan_Carlos_I_L61.jpg", launched: "2008-03-10", commissioned: "2010-09-30", history: [
-        { date: "2026-03-24", ...LOCATIONS.rota, status: "En Puerto", op: "Base Rota", desc: "Puerto base en Rota; preparación para ejercicios OTAN.", sources: [{ name: "Armada Española", url: "#" }] }
-    ]}
+    
 
 
 ];
