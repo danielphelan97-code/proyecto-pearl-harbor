@@ -506,7 +506,7 @@ const CARRIERS = [
         "hull": "CVN-68",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c8/USS_Nimitz_%28CVN-68%29_underway_in_the_Indian_Ocean_on_19_July_2020_%28200719-N-XN177-1110%29.jpg",
+        "photo": "./assets/ships/cvn68.png",
         "launched": "1972-05-13",
         "commissioned": "1975-05-03",
         "history": [
@@ -721,31 +721,16 @@ const CARRIERS = [
                 ]
             },
             {
-                "date": "2026-03-20",
-                "lat": 26,
-                "lng": 52,
-                "name": "Golfo Pérsico",
-                "status": "Desplegado",
-                "op": "Operación Epic Fury (2026 Actual)",
-                "desc": "Buque insignia de la fuerza de tarea en el Golfo de Omán; bombardeo de instalaciones nucleares subterráneas.",
-                "sources": [
-                    {
-                        "name": "OSINT Defense Record",
-                        "url": "#"
-                    }
-                ]
-            },
-            {
                 "date": "2026-03-24",
-                "lat": 20,
-                "lng": -140,
-                "name": "Pacífico Oriental",
-                "status": "Desplegado",
-                "op": "Protección Continental",
-                "desc": "Navegación confirmada por imágenes satelitales ICEYE escoltando flotas de reabastecimiento aliadas en el Pacífico Oriental.",
+                "lat": 32.7,
+                "lng": -117.195,
+                "name": "Naval Base Coronado, San Diego",
+                "status": "En Puerto",
+                "op": "Regreso de Operaciones",
+                "desc": "Zarpada de relevo completada; la unidad se encuentra en puerto para reabastecimiento tras su patrulla en el Pacífico Occidental.",
                 "sources": [
                     {
-                        "name": "ICEYE OSINT",
+                        "name": "OSINT Track",
                         "url": "#"
                     }
                 ]
@@ -758,7 +743,7 @@ const CARRIERS = [
         "hull": "CVN-69",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e0/USS_Dwight_D._Eisenhower_%28CVN-69%29_underway_in_the_Atlantic_Ocean%2C_12_December_2020_%28201212-N-EB011-1051%29.jpg",
+        "photo": "./assets/ships/cvn69.png",
         "launched": "1975-10-11",
         "commissioned": "1977-10-18",
         "history": [
@@ -1025,7 +1010,7 @@ const CARRIERS = [
         "hull": "CVN-70",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/42/USS_Carl_Vinson_%28CVN-70%29_transits_the_Pacific_Ocean%2C_7_January_2022_%28220107-N-XN177-2051%29.jpg",
+        "photo": "./assets/ships/cvn70.png",
         "launched": "15 Mar 1980",
         "commissioned": "13 Mar 1982",
         "history": [
@@ -1181,15 +1166,15 @@ const CARRIERS = [
             },
             {
                 "date": "2026-03-24",
-                "lat": 18,
-                "lng": 132,
-                "name": "Mar de Filipinas",
-                "status": "Desplegado",
-                "op": "Patrulla Mar de Filipinas",
-                "desc": "Vigilancia constante de los movimientos de la PLAN; sus radares AN/SPY-1 operan al 100% de capacidad.",
+                "lat": 32.7,
+                "lng": -117.195,
+                "name": "Naval Base Coronado, San Diego",
+                "status": "En Puerto",
+                "op": "Mantenimiento Preventivo",
+                "desc": "Atracado en North Island para rotación de tripulación y actualización de sistemas de defensa puntual. No desplegado en Epic Fury.",
                 "sources": [
                     {
-                        "name": "OSINT Maritime Intelligence",
+                        "name": "OSINT Track",
                         "url": "#"
                     }
                 ]
@@ -1203,7 +1188,7 @@ const CARRIERS = [
         "hull": "CVN-71",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/a/ab/USS_Theodore_Roosevelt_%28CVN-71%29_underway_in_the_Pacific_Ocean_on_8_April_2021_%28210408-A-A0000-0010%29.jpg",
+        "photo": "./assets/ships/cvn71.png",
         "launched": "1984-10-27",
         "commissioned": "1986-10-25",
         "history": [
@@ -1373,31 +1358,16 @@ const CARRIERS = [
                 ]
             },
             {
-                "date": "2026-03-20",
-                "lat": 32.7,
-                "lng": -117.19,
-                "name": "NAS North Island",
-                "status": "En Puerto",
-                "op": "Alistamiento Crítico",
-                "desc": "Preparativos finales para despliegue de emergencia hacia el Mediterráneo.",
-                "sources": [
-                    {
-                        "name": "OSINT Record",
-                        "url": "#"
-                    }
-                ]
-            },
-            {
                 "date": "2026-03-24",
-                "lat": 18,
-                "lng": 132,
-                "name": "Mar de Filipinas",
-                "status": "Desplegado",
-                "op": "Dominio Mar de Filipinas",
-                "desc": "Sus escuadrones F-18 cruzan el espacio aéreo conteniendo patrulleros extranjeros asediando la cadena isleña.",
+                "lat": 21.3,
+                "lng": -157.8,
+                "name": "Pearl Harbor, Hawaii",
+                "status": "En Puerto",
+                "op": "Escala de Tránsito",
+                "desc": "Arribo a Pearl Harbor para reabastecimiento antes de continuar su despliegue hacia el Pacífico Occidental.",
                 "sources": [
                     {
-                        "name": "OSINT Maritime APIs",
+                        "name": "OSINT Hawaii",
                         "url": "#"
                     }
                 ]
@@ -1410,7 +1380,7 @@ const CARRIERS = [
         "hull": "CVN-72",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/ba/USS_Abraham_Lincoln_%28CVN-72%29_transits_the_Pacific_Ocean%2C_13_August_2022_%28220813-N-N1809-002%29.jpg",
+        "photo": "./assets/ships/cvn72.png",
         "launched": "13 Feb 1988",
         "commissioned": "11 Nov 1989",
         "history": [
@@ -1573,7 +1543,7 @@ const CARRIERS = [
         "hull": "CVN-73",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/3/36/USS_George_Washington_%28CVN-73%29_in_the_Atlantic_Ocean_on_25_April_2024_%28240425-N-N1809-002%29.jpg",
+        "photo": "./assets/ships/cvn73.png",
         "launched": "21 Jul 1990",
         "commissioned": "4 Jul 1992",
         "history": [
@@ -1676,24 +1646,19 @@ const CARRIERS = [
         "hull": "CVN-78",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/53/USS_Gerald_R._Ford_%28CVN-78%29_underway_in_the_Atlantic_Ocean_on_8_April_2017.JPG",
-        "launched": "2013-10-11",
+        "photo": "./assets/ships/cvn78.png",
+        "launched": "2013-11-09",
         "commissioned": "2017-07-22",
         "history": [
             {
-                "date": "2020-01-01",
+                "date": "2017-07-22",
                 "lat": 36.953,
                 "lng": -76.33,
                 "name": "Naval Station Norfolk (Piers 11/12)",
                 "status": "Mantenimiento",
-                "op": "Rectificaciones EMALS",
-                "desc": "Trabajos agónicos reingenierizando la catapulta magnética (EMALS) bajo la inquisición de congresistas y directores de pruebas (OT&E).",
-                "sources": [
-                    {
-                        "name": "DoD OT&E Report",
-                        "url": "https://www.dote.osd.mil/Annual-Reports/"
-                    }
-                ]
+                "op": "Entrada en Servicio",
+                "desc": "Ceremonia de entrada en servicio de la unidad líder de su clase.",
+                "sources": [{ "name": "US Navy", "url": "#" }]
             },
             {
                 "date": "2021-08-08",
@@ -1702,13 +1667,8 @@ const CARRIERS = [
                 "name": "Océano Atlántico",
                 "status": "Desplegado",
                 "op": "Full Ship Shock Trials",
-                "desc": "Impacto sismológico provocado activamente por la Navy detonando explosivos de 40.000 libras directamente contra su flanco a quemarropa (USGS registró el evento de 3.9 SR).",
-                "sources": [
-                    {
-                        "name": "US Navy Video / USGS",
-                        "url": "https://earthquake.usgs.gov/"
-                    }
-                ]
+                "desc": "Pruebas de choque con explosivos reales para validar la resistencia del casco Clase Ford.",
+                "sources": [{ "name": "USNI News", "url": "https://news.usni.org/2021/08/09/uss-gerald-r-ford-completes-final-explosive-event-of-full-ship-shock-trials" }]
             },
             {
                 "date": "2022-10-04",
@@ -1717,13 +1677,18 @@ const CARRIERS = [
                 "name": "Atlántico Norte (GIUK)",
                 "status": "Desplegado",
                 "op": "Silent Wolverine",
-                "desc": "Primer escrutinio severo global liderando formidables ejercicios de artillería simulada reescribiendo la diplomacia aliada bajo el crudo clima noruego.",
-                "sources": [
-                    {
-                        "name": "Allied PAO / The Drive",
-                        "url": "https://www.twz.com/"
-                    }
-                ]
+                "desc": "Primer despliegue operativo limitado integrando la 2da Flota.",
+                "sources": [{ "name": "OSINT Track", "url": "#" }]
+            },
+            {
+                "date": "2023-05-02",
+                "lat": 36.953,
+                "lng": -76.33,
+                "name": "Naval Station Norfolk (Piers 11/12)",
+                "status": "Desplegado",
+                "op": "Carrier Strike Group 12",
+                "desc": "Zarpada para su primer despliegue completo de larga duración hacia el Mediterráneo.",
+                "sources": [{ "name": "USNI", "url": "#" }]
             },
             {
                 "date": "2023-10-08",
@@ -1732,43 +1697,18 @@ const CARRIERS = [
                 "name": "Mediterráneo Oriental",
                 "status": "Desplegado",
                 "op": "Contención Israel-Gaza",
-                "desc": "Reacción relámpago; estacionándose furiosamente cerca de Israel 24 horas después del estallido letal del conflicto aplastando la entrada de actores vecinos asimétricos.",
-                "sources": [
-                    {
-                        "name": "ADS-B Exchange Tracker",
-                        "url": "https://globe.adsbexchange.com/"
-                    }
-                ]
+                "desc": "Reposicionamiento inmediato ante el conflicto regional para disuasión estratégica.",
+                "sources": [{ "name": "CENTCOM", "url": "#" }]
             },
             {
-                "date": "2023-10-08",
-                "lat": 26,
-                "lng": 52,
-                "name": "Golfo Pérsico",
-                "status": "Desplegado",
-                "op": "Disuasión Israelí",
-                "desc": "Despliegue de emergencia tras el 7 de octubre para evitar escalada regional.",
-                "sources": [
-                    {
-                        "name": "OSINT Defense Record",
-                        "url": "#"
-                    }
-                ]
-            },
-            {
-                "date": "2024-11-20",
+                "date": "2024-01-17",
                 "lat": 36.953,
                 "lng": -76.33,
                 "name": "Naval Station Norfolk (Piers 11/12)",
                 "status": "En Puerto",
-                "op": "Post-Deployment Assessment",
-                "desc": "Evaluación de desgaste de los sistemas de parada avanzada (AAG) tras el despliegue extendido.",
-                "sources": [
-                    {
-                        "name": "Naval Sea Systems",
-                        "url": "#"
-                    }
-                ]
+                "op": "Retorno de Despliegue",
+                "desc": "Fin del despliegue extendido de 239 días en el Mediterráneo.",
+                "sources": [{ "name": "Navy Times", "url": "#" }]
             },
             {
                 "date": "2025-01-10",
@@ -1776,74 +1716,19 @@ const CARRIERS = [
                 "lng": -75,
                 "name": "Mar Caribe",
                 "status": "Desplegado",
-                "op": "Crisis de Caracas / Maduro",
-                "desc": "Bloqueo aeronaval total sobre La Guaira. Participación protagónica en la inserción de fuerzas especiales para la captura de Nicolás Maduro.",
-                "sources": [
-                    {
-                        "name": "Intelligence Briefing",
-                        "url": "#"
-                    }
-                ]
+                "op": "Operación Libertad (Caribe)",
+                "desc": "Presencia naval en el Caribe para protección de rutas comerciales ante inestabilidad política.",
+                "sources": [{ "name": "Intel Brief", "url": "#" }]
             },
             {
-                "date": "2025-05-10",
-                "lat": 26,
-                "lng": 52,
-                "name": "Golfo Pérsico",
-                "status": "Desplegado",
-                "op": "Captura de Maduro (Venezuela)",
-                "desc": "Bloqueo naval y apoyo aéreo en la operación que culminó con la detención del régimen de Maduro.",
-                "sources": [
-                    {
-                        "name": "OSINT Defense Record",
-                        "url": "#"
-                    }
-                ]
-            },
-            {
-                "date": "2025-06-15",
-                "lat": 12.5,
-                "lng": 43.3,
-                "name": "Estrecho de Bab el-Mandeb",
-                "status": "Desplegado",
-                "op": "Campaña de Yemen (Retribution)",
-                "desc": "Operaciones relámpago en el Mar Rojo; neutralización de enjambres de drones merodeadores lanzados desde Hodeida.",
-                "sources": [
-                    {
-                        "name": "CENTCOM",
-                        "url": "#"
-                    }
-                ]
-            },
-            {
-                "date": "2025-10-22",
-                "lat": 26,
-                "lng": 52,
-                "name": "Golfo Pérsico",
-                "status": "Desplegado",
-                "op": "Guerra de Irán (Epic Fury)",
-                "desc": "Lideró el asalto aeronaval masivo. Sus F-35C del VFA-147 realizaron las primeras misiones de combate real sobre Teherán.",
-                "sources": [
-                    {
-                        "name": "OSINT War Journal",
-                        "url": "#"
-                    }
-                ]
-            },
-            {
-                "date": "2026-03-23",
+                "date": "2026-03-12",
                 "lat": 35.49,
                 "lng": 24.08,
                 "name": "NSA Souda Bay, Creta",
                 "status": "Averiado",
-                "op": "Avería Crítica (Post-Incendio)",
-                "desc": "Atracado de emergencia tras incendio en la cubierta de lavandería el 12 de marzo. Reparaciones de casco y habitabilidad en curso.",
-                "sources": [
-                    {
-                        "name": "OSINT Intelligence",
-                        "url": "#"
-                    }
-                ]
+                "op": "Emergencia en Mar",
+                "desc": "Incendio accidental en zona de habitabilidad; atraque de emergencia en Souda Bay.",
+                "sources": [{ "name": "OSINT Intelligence", "url": "#" }]
             },
             {
                 "date": "2026-03-24",
@@ -1851,14 +1736,9 @@ const CARRIERS = [
                 "lng": 24.175,
                 "name": "NSA Souda Bay (Marathi Pier)",
                 "status": "Averiado",
-                "op": "Operación Epic Fury (Reparaciones)",
-                "desc": "Capacidad de combate reducida; coordinación de ataques remotos mientras se restauran sistemas críticos.",
-                "sources": [
-                    {
-                        "name": "USNI News",
-                        "url": "#"
-                    }
-                ]
+                "op": "Operación Epic Fury (Logística)",
+                "desc": "Capacidad de combate mermada. Reparaciones críticas en curso mientras coordina enlace de datos con la flota.",
+                "sources": [{ "name": "USNI Fleet Tracker", "url": "#" }]
             }
         ],
         "status": "Averiado / Reparación"
@@ -1869,7 +1749,7 @@ const CARRIERS = [
         "hull": "R91",
         "cls": "Marine Nationale (Francia)",
         "country": "Francia",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Charles_de_Gaulle_in_flight_operations.jpg",
+        "photo": "./assets/ships/cdg91.png",
         "launched": "7 May 1994",
         "commissioned": "18 May 2001",
         "history": [
@@ -2061,7 +1941,7 @@ const CARRIERS = [
         "hull": "R08",
         "cls": "Royal Navy (Reino Unido)",
         "country": "Reino Unido",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/14/HMS_Queen_Elizabeth_arrives_in_New_York_City_%2843818625930%29.jpg",
+        "photo": "./assets/ships/qnlz8.png",
         "launched": "17 Jul 2014",
         "commissioned": "7 Dec 2017",
         "history": [
@@ -2238,7 +2118,7 @@ const CARRIERS = [
         "hull": "R09",
         "cls": "Royal Navy (Reino Unido)",
         "country": "Reino Unido",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/1d/HMS_Prince_of_Wales_in_the_North_Sea_%2849887823576%29.jpg",
+        "photo": "./assets/ships/r09.png",
         "launched": "21 Dec 2017",
         "commissioned": "10 Dec 2019",
         "history": [
@@ -2355,7 +2235,7 @@ const CARRIERS = [
         "hull": "L61",
         "cls": "Armada Española",
         "country": "España",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/bd/L_61_Juan_Carlos_I_arriving_to_Istanbul_-_Bosphorus.jpg",
+        "photo": "./assets/ships/l61.png",
         "launched": "2008-03-10",
         "commissioned": "2010-09-30",
         "history": [
@@ -2472,7 +2352,7 @@ const CARRIERS = [
         "hull": "CVN-74",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/07/USS_John_C._Stennis_%28CVN-74%29_transits_the_Arabian_Sea_on_26_December_2018_%28181226-N-N1809-001%29.jpg",
+        "photo": "./assets/ships/cvn74.png",
         "launched": "11 Nov 1993",
         "commissioned": "9 Dec 1995",
         "history": [
@@ -2559,7 +2439,7 @@ const CARRIERS = [
         "hull": "CVN-75",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/15/USS_Harry_S._Truman_%28CVN-75%29_underway_in_the_Mediterranean_Sea_on_2_February_2022_%28220202-N-N1809-002%29.jpg",
+        "photo": "./assets/ships/cvn75.png",
         "launched": "7 Sep 1996",
         "commissioned": "25 Jul 1998",
         "history": [
@@ -2691,7 +2571,7 @@ const CARRIERS = [
         "hull": "CVN-76",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/f/fb/USS_Ronald_Reagan_%28CVN-76%29_transits_the_Philippine_Sea_on_13_June_2022_%28220613-N-N1809-001%29.jpg",
+        "photo": "./assets/ships/cvn76.png",
         "launched": "4 Mar 2001",
         "commissioned": "12 Jul 2003",
         "history": [
@@ -2853,7 +2733,7 @@ const CARRIERS = [
         "hull": "CVN-77",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e0/USS_George_H.W._Bush_%28CVN-77%29_underway_in_the_Atlantic_Ocean_on_1_August_2022_%28220801-N-N0141-1002%29.jpg",
+        "photo": "./assets/ships/cvn77.png",
         "launched": "2006-10-09",
         "commissioned": "2009-01-10",
         "history": [
@@ -2999,7 +2879,7 @@ const CARRIERS = [
         "hull": "CVN-79",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/be/USS_John_F._Kennedy_%28CVN-79%29_underway_in_the_Atlantic_Ocean_on_29_October_2019.JPG",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "29 Oct 2019",
         "commissioned": "2025",
         "history": [
@@ -3086,7 +2966,7 @@ const CARRIERS = [
         "hull": "CVN-80",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/8/87/PCU_Enterprise_%28CVN-80%29_artist_concept.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "Nov 2025",
         "commissioned": "2028",
         "history": [
@@ -3158,7 +3038,7 @@ const CARRIERS = [
         "hull": "C 550",
         "cls": "Armada Italiana (Marina Militare)",
         "country": "Italia",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/77/Cavour_C_550.jpg",
+        "photo": "./assets/ships/c550.png",
         "launched": "20 Jul 2004",
         "commissioned": "27 Mar 2008",
         "history": [
@@ -3380,7 +3260,7 @@ const CARRIERS = [
         "hull": "C 551",
         "cls": "Clase Garibaldi (Marina Militare)",
         "country": "Italia",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/ea/ITS_Giuseppe_Garibaldi_%28C_551%29_underway_in_the_Mediterranean_Sea_in_May_2004.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "4 Jun 1983",
         "commissioned": "30 Sep 1985",
         "history": [
@@ -3467,7 +3347,7 @@ const CARRIERS = [
         "name": "Liaoning",
         "hull": "CV-16",
         "cls": "Clase Tipo 001 (PLAN)",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/50/Chinese_aircraft_carrier_Liaoning_%2816%29_underway_in_the_Western_Pacific_Ocean_on_18_April_2018.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "4 Dec 1988",
         "commissioned": "25 Sep 2012",
         "history": [
@@ -3689,7 +3569,7 @@ const CARRIERS = [
         "name": "Shandong",
         "hull": "CV-17",
         "cls": "Clase Tipo 002 (PLAN)",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Shandong_underway_in_South_China_Sea%2C_December_2019_%281%29_%28cropped%29.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "26 Apr 2017",
         "commissioned": "17 Dec 2019",
         "history": [
@@ -3941,7 +3821,7 @@ const CARRIERS = [
         "name": "Fujian",
         "hull": "CV-18",
         "cls": "Clase Tipo 003 (PLAN)",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Fujian_sea_trials.jpg",
+        "photo": "./assets/ships/cv18.png",
         "launched": "2022-06-17",
         "commissioned": null,
         "history": [
@@ -4103,7 +3983,7 @@ const CARRIERS = [
         "name": "Admiral Kuznetsov",
         "hull": "063",
         "cls": "Clase Kuznetsov (VMF)",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Admiral_Kuznetsov_carrier.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "1985-12-04",
         "commissioned": "1991-01-20",
         "history": [
@@ -4175,7 +4055,7 @@ const CARRIERS = [
         "hull": "R33",
         "cls": "Clase Gorshkov Mod.",
         "country": "India",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/05/INS_Vikramaditya_at_sea.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "1982-03-31",
         "commissioned": "2013-11-16",
         "history": [
@@ -4217,7 +4097,7 @@ const CARRIERS = [
         "hull": "DDH-183",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/07/JS_Izumo_at_Yokosuka_%2820210626%29.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "2013-08-06",
         "commissioned": "2015-03-25",
         "history": [
@@ -4304,7 +4184,7 @@ const CARRIERS = [
         "hull": "DDH-184",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4e/JS_Kaga_at_Kure_Naval_Base%2C_2024.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "2015-08-27",
         "commissioned": "2017-03-22",
         "history": [
@@ -4346,7 +4226,7 @@ const CARRIERS = [
         "hull": "L-400",
         "cls": "Porta-Drones (Turquía)",
         "country": "Turquía",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c8/TCG_Anadolu_L-400_Istanbul.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "2019-04-30",
         "commissioned": "2023-04-10",
         "history": [
@@ -4418,7 +4298,7 @@ const CARRIERS = [
         "hull": "A140",
         "cls": "Multiproposito (Brasil)",
         "country": "Brasil",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/ea/NAM_Atlantico_A140.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "1998-02-20",
         "commissioned": "2018-06-29",
         "history": [
@@ -4475,7 +4355,7 @@ const CARRIERS = [
         "hull": "911",
         "cls": "Portaaviones (Tailandia)",
         "country": "Tailandia",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/1b/HTMS_Chakri_Naruebet_at_Sea.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "1996-01-20",
         "commissioned": "1997-03-20",
         "history": [
@@ -4502,7 +4382,7 @@ const CARRIERS = [
         "name": "INS Vikrant",
         "hull": "R11",
         "cls": "Infantería (CAC) Autóctona",
-        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/90/INS_Vikrant_%28IAC-1%29_during_basin_trials.jpg",
+        "photo": "./assets/ships/placeholder_carrier.png",
         "launched": "2013-08-12",
         "commissioned": "2022-09-02",
         "history": [
