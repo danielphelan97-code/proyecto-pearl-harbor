@@ -487,7 +487,7 @@ const CARRIERS = [
         "hull": "CVN-68",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Nimitz_%28CVN-68%29_underway_in_the_Indian_Ocean_on_19_July_2020_%28200719-N-XN177-1110%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c8/USS_Nimitz_%28CVN-68%29_underway_in_the_Indian_Ocean_on_19_July_2020_%28200719-N-XN177-1110%29.jpg",
         "launched": "1972-05-13",
         "commissioned": "1975-05-03",
         "history": [
@@ -739,7 +739,7 @@ const CARRIERS = [
         "hull": "CVN-69",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Dwight_D._Eisenhower_%28CVN-69%29_underway_in_the_Atlantic_Ocean%2C_12_December_2020_%28201212-N-EB011-1051%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e0/USS_Dwight_D._Eisenhower_%28CVN-69%29_underway_in_the_Atlantic_Ocean%2C_12_December_2020_%28201212-N-EB011-1051%29.jpg",
         "launched": "1975-10-11",
         "commissioned": "1977-10-18",
         "history": [
@@ -961,7 +961,7 @@ const CARRIERS = [
         "hull": "CVN-70",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Carl_Vinson_%28CVN-70%29_transits_the_Pacific_Ocean%2C_7_January_2022_%28220107-N-XN177-2051%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/42/USS_Carl_Vinson_%28CVN-70%29_transits_the_Pacific_Ocean%2C_7_January_2022_%28220107-N-XN177-2051%29.jpg",
         "launched": "15 Mar 1980",
         "commissioned": "13 Mar 1982",
         "history": [
@@ -1123,7 +1123,7 @@ const CARRIERS = [
         "hull": "CVN-71",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Theodore_Roosevelt_%28CVN-71%29_underway_in_the_Pacific_Ocean_on_8_April_2021_%28210408-A-A0000-0010%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/a/ab/USS_Theodore_Roosevelt_%28CVN-71%29_underway_in_the_Pacific_Ocean_on_8_April_2021_%28210408-A-A0000-0010%29.jpg",
         "launched": "1984-10-27",
         "commissioned": "1986-10-25",
         "history": [
@@ -1285,7 +1285,7 @@ const CARRIERS = [
         "hull": "CVN-72",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Abraham_Lincoln_%28CVN-72%29_transits_the_Pacific_Ocean%2C_13_August_2022_%28220813-N-N1809-002%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/ba/USS_Abraham_Lincoln_%28CVN-72%29_transits_the_Pacific_Ocean%2C_13_August_2022_%28220813-N-N1809-002%29.jpg",
         "launched": "13 Feb 1988",
         "commissioned": "11 Nov 1989",
         "history": [
@@ -1432,7 +1432,7 @@ const CARRIERS = [
         "hull": "CVN-73",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_George_Washington_%28CVN-73%29_in_the_Atlantic_Ocean_on_25_April_2024_%28240425-N-N1809-002%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/3/36/USS_George_Washington_%28CVN-73%29_in_the_Atlantic_Ocean_on_25_April_2024_%28240425-N-N1809-002%29.jpg",
         "launched": "21 Jul 1990",
         "commissioned": "4 Jul 1992",
         "history": [
@@ -1534,7 +1534,7 @@ const CARRIERS = [
         "hull": "CVN-78",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Gerald_R._Ford_%28CVN-78%29_underway_in_the_Atlantic_Ocean_on_8_April_2017.JPG?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/53/USS_Gerald_R._Ford_%28CVN-78%29_underway_in_the_Atlantic_Ocean_on_8_April_2017.JPG",
         "launched": "2013-10-11",
         "commissioned": "2017-07-22",
         "history": [
@@ -1694,8 +1694,8 @@ const CARRIERS = [
                 "lng": 24.175,
                 "name": "NSA Souda Bay (Marathi Pier)",
                 "status": "En Puerto",
-                "op": "Muelle Minotaur (Avería)",
-                "desc": "Atracado discretamente en Creta tras reportes de un conato de incendio menor en la zona de hangares.",
+                "op": "Operación Epic Fury (2026 Actual)",
+                "desc": "Coordinación de ataques de precisión con cazas F-35C sobre Teherán.",
                 "sources": [
                     {
                         "name": "USNI News",
@@ -1726,7 +1726,7 @@ const CARRIERS = [
         "hull": "R91",
         "cls": "Marine Nationale (Francia)",
         "country": "Francia",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Charles_de_Gaulle_in_flight_operations.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Charles_de_Gaulle_in_flight_operations.jpg",
         "launched": "7 May 1994",
         "commissioned": "18 May 2001",
         "history": [
@@ -1918,7 +1918,7 @@ const CARRIERS = [
         "hull": "R08",
         "cls": "Royal Navy (Reino Unido)",
         "country": "Reino Unido",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/HMS_Queen_Elizabeth_arrives_in_New_York_City_%2843818625930%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/14/HMS_Queen_Elizabeth_arrives_in_New_York_City_%2843818625930%29.jpg",
         "launched": "17 Jul 2014",
         "commissioned": "7 Dec 2017",
         "history": [
@@ -2095,7 +2095,7 @@ const CARRIERS = [
         "hull": "R09",
         "cls": "Royal Navy (Reino Unido)",
         "country": "Reino Unido",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/HMS_Prince_of_Wales_in_the_North_Sea_%2849887823576%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/1d/HMS_Prince_of_Wales_in_the_North_Sea_%2849887823576%29.jpg",
         "launched": "21 Dec 2017",
         "commissioned": "10 Dec 2019",
         "history": [
@@ -2212,7 +2212,7 @@ const CARRIERS = [
         "hull": "L61",
         "cls": "Armada Española",
         "country": "España",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/L_61_Juan_Carlos_I_arriving_to_Istanbul_-_Bosphorus.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/bd/L_61_Juan_Carlos_I_arriving_to_Istanbul_-_Bosphorus.jpg",
         "launched": "2008-03-10",
         "commissioned": "2010-09-30",
         "history": [
@@ -2329,7 +2329,7 @@ const CARRIERS = [
         "hull": "CVN-74",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_John_C._Stennis_%28CVN-74%29_transits_the_Arabian_Sea_on_26_December_2018_%28181226-N-N1809-001%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/07/USS_John_C._Stennis_%28CVN-74%29_transits_the_Arabian_Sea_on_26_December_2018_%28181226-N-N1809-001%29.jpg",
         "launched": "11 Nov 1993",
         "commissioned": "9 Dec 1995",
         "history": [
@@ -2401,7 +2401,7 @@ const CARRIERS = [
         "hull": "CVN-75",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Harry_S._Truman_%28CVN-75%29_underway_in_the_Mediterranean_Sea_on_2_February_2022_%28220202-N-N1809-002%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/15/USS_Harry_S._Truman_%28CVN-75%29_underway_in_the_Mediterranean_Sea_on_2_February_2022_%28220202-N-N1809-002%29.jpg",
         "launched": "7 Sep 1996",
         "commissioned": "25 Jul 1998",
         "history": [
@@ -2503,7 +2503,7 @@ const CARRIERS = [
         "hull": "CVN-76",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_Ronald_Reagan_%28CVN-76%29_transits_the_Philippine_Sea_on_13_June_2022_%28220613-N-N1809-001%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/f/fb/USS_Ronald_Reagan_%28CVN-76%29_transits_the_Philippine_Sea_on_13_June_2022_%28220613-N-N1809-001%29.jpg",
         "launched": "4 Mar 2001",
         "commissioned": "12 Jul 2003",
         "history": [
@@ -2650,7 +2650,7 @@ const CARRIERS = [
         "hull": "CVN-77",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_George_H.W._Bush_%28CVN-77%29_underway_in_the_Atlantic_Ocean_on_1_August_2022_%28220801-N-N0141-1002%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e0/USS_George_H.W._Bush_%28CVN-77%29_underway_in_the_Atlantic_Ocean_on_1_August_2022_%28220801-N-N0141-1002%29.jpg",
         "launched": "2006-10-09",
         "commissioned": "2009-01-10",
         "history": [
@@ -2751,7 +2751,7 @@ const CARRIERS = [
         "hull": "CVN-79",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/USS_John_F._Kennedy_%28CVN-79%29_underway_in_the_Atlantic_Ocean_on_29_October_2019.JPG?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/be/USS_John_F._Kennedy_%28CVN-79%29_underway_in_the_Atlantic_Ocean_on_29_October_2019.JPG",
         "launched": "29 Oct 2019",
         "commissioned": "2025",
         "history": [
@@ -2838,7 +2838,7 @@ const CARRIERS = [
         "hull": "CVN-80",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/PCU_Enterprise_%28CVN-80%29_artist_concept.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/8/87/PCU_Enterprise_%28CVN-80%29_artist_concept.jpg",
         "launched": "Nov 2025",
         "commissioned": "2028",
         "history": [
@@ -2910,7 +2910,7 @@ const CARRIERS = [
         "hull": "C 550",
         "cls": "Armada Italiana (Marina Militare)",
         "country": "Italia",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Cavour_C_550.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/7/77/Cavour_C_550.jpg",
         "launched": "20 Jul 2004",
         "commissioned": "27 Mar 2008",
         "history": [
@@ -3132,7 +3132,7 @@ const CARRIERS = [
         "hull": "C 551",
         "cls": "Clase Garibaldi (Marina Militare)",
         "country": "Italia",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/ITS_Giuseppe_Garibaldi_%28C_551%29_underway_in_the_Mediterranean_Sea_in_May_2004.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/ea/ITS_Giuseppe_Garibaldi_%28C_551%29_underway_in_the_Mediterranean_Sea_in_May_2004.jpg",
         "launched": "4 Jun 1983",
         "commissioned": "30 Sep 1985",
         "history": [
@@ -3219,7 +3219,7 @@ const CARRIERS = [
         "name": "Liaoning",
         "hull": "CV-16",
         "cls": "Clase Tipo 001 (PLAN)",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Chinese_aircraft_carrier_Liaoning_%2816%29_underway_in_the_Western_Pacific_Ocean_on_18_April_2018.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/5/50/Chinese_aircraft_carrier_Liaoning_%2816%29_underway_in_the_Western_Pacific_Ocean_on_18_April_2018.jpg",
         "launched": "4 Dec 1988",
         "commissioned": "25 Sep 2012",
         "history": [
@@ -3411,7 +3411,7 @@ const CARRIERS = [
         "name": "Shandong",
         "hull": "CV-17",
         "cls": "Clase Tipo 002 (PLAN)",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Shandong_underway_in_South_China_Sea%2C_December_2019_%281%29_%28cropped%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Shandong_underway_in_South_China_Sea%2C_December_2019_%281%29_%28cropped%29.jpg",
         "launched": "26 Apr 2017",
         "commissioned": "17 Dec 2019",
         "history": [
@@ -3633,7 +3633,7 @@ const CARRIERS = [
         "name": "Fujian",
         "hull": "CV-18",
         "cls": "Clase Tipo 003 (PLAN)",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Fujian_sea_trials.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Fujian_sea_trials.jpg",
         "launched": "2022-06-17",
         "commissioned": null,
         "history": [
@@ -3795,7 +3795,7 @@ const CARRIERS = [
         "name": "Admiral Kuznetsov",
         "hull": "063",
         "cls": "Clase Kuznetsov (VMF)",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Admiral_Kuznetsov_carrier.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Admiral_Kuznetsov_carrier.jpg",
         "launched": "1985-12-04",
         "commissioned": "1991-01-20",
         "history": [
@@ -3867,7 +3867,7 @@ const CARRIERS = [
         "hull": "R33",
         "cls": "Clase Gorshkov Mod.",
         "country": "India",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/INS_Vikramaditya_at_sea.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/05/INS_Vikramaditya_at_sea.jpg",
         "launched": "1982-03-31",
         "commissioned": "2013-11-16",
         "history": [
@@ -3909,7 +3909,7 @@ const CARRIERS = [
         "hull": "DDH-183",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/JS_Izumo_at_Yokosuka_%2820210626%29.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/0/07/JS_Izumo_at_Yokosuka_%2820210626%29.jpg",
         "launched": "2013-08-06",
         "commissioned": "2015-03-25",
         "history": [
@@ -3996,7 +3996,7 @@ const CARRIERS = [
         "hull": "DDH-184",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/JS_Kaga_at_Kure_Naval_Base%2C_2024.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4e/JS_Kaga_at_Kure_Naval_Base%2C_2024.jpg",
         "launched": "2015-08-27",
         "commissioned": "2017-03-22",
         "history": [
@@ -4038,7 +4038,7 @@ const CARRIERS = [
         "hull": "L-400",
         "cls": "Porta-Drones (Turquía)",
         "country": "Turquía",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/TCG_Anadolu_L-400_Istanbul.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c8/TCG_Anadolu_L-400_Istanbul.jpg",
         "launched": "2019-04-30",
         "commissioned": "2023-04-10",
         "history": [
@@ -4110,7 +4110,7 @@ const CARRIERS = [
         "hull": "A140",
         "cls": "Multiproposito (Brasil)",
         "country": "Brasil",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/NAM_Atlantico_A140.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/e/ea/NAM_Atlantico_A140.jpg",
         "launched": "1998-02-20",
         "commissioned": "2018-06-29",
         "history": [
@@ -4167,7 +4167,7 @@ const CARRIERS = [
         "hull": "911",
         "cls": "Portaaviones (Tailandia)",
         "country": "Tailandia",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/HTMS_Chakri_Naruebet_at_Sea.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/1/1b/HTMS_Chakri_Naruebet_at_Sea.jpg",
         "launched": "1996-01-20",
         "commissioned": "1997-03-20",
         "history": [
@@ -4194,7 +4194,7 @@ const CARRIERS = [
         "name": "INS Vikrant",
         "hull": "R11",
         "cls": "Infantería (CAC) Autóctona",
-        "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/INS_Vikrant_%28IAC-1%29_during_basin_trials.jpg?width=800",
+        "photo": "https://upload.wikimedia.org/wikipedia/commons/9/90/INS_Vikrant_%28IAC-1%29_during_basin_trials.jpg",
         "launched": "2013-08-12",
         "commissioned": "2022-09-02",
         "history": [
