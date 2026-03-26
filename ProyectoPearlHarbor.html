@@ -412,10 +412,17 @@
             </div>
         </div>
     </div>
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
+        // TELEMETRY: Error Catcher injected by AI
+        window.onerror = function(message, source, lineno, colno, error) {
+            const errDiv = document.createElement('div');
+            errDiv.style.cssText = "position:fixed;top:10px;left:10px;z-index:99999;background:rgba(255,0,0,0.9);color:white;padding:15px;border-radius:8px;font-family:monospace;font-size:14px;max-width:80%;max-height:50vh;overflow-y:auto;border: 2px solid white;box-shadow: 0 0 20px rgba(255,0,0,0.8);";
+            errDiv.innerHTML = `<strong>💣 ALERTA CRÍTICA JS:</strong><br><br><strong>Avería:</strong> ${message}<br><strong>Archivo:</strong> ${source}<br><strong>Línea:</strong> ${lineno}:${colno}<br><br><em>Copia esto y dáselo al Capitán Gravy.</em>`;
+            document.body.appendChild(errDiv);
+            return false;
+        };
     </script>
     <script src="data/carriers_data.js"></script>
     <script>
@@ -441,10 +448,27 @@
         let showTrails = true;
 
         // Inicialización de Mapa
-        const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([20, 0], 2);
+        const map = L.map('map', {
+            center: [20, 0],
+            zoom: 2,
+            minZoom: 2,
+            maxZoom: 18,
+            zoomControl: false,
+            attributionControl: false,
+            worldCopyJump: true
+        });
 
-        const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 });
-        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 });
+        const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 20,
+            noWrap: false
+        });
+        const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { 
+            maxZoom: 19,
+            noWrap: false
+        });
+        
         darkLayer.addTo(map);
         const ROUTE_NODES = {
             san_diego: { lat: 32.7, lng: -117.1 },
@@ -642,30 +666,27 @@
                 }
             }
 
-            if (!next) {
+            // --- LÓGICA DE ESTADO ESTÁTICO (PORT-STAY / MANTENIMIENTO) ---
+            if (!next || prev.status === "En Puerto" || prev.status === "Mantenimiento" || prev.status === "Astillero" || prev.status === "Retirado") {
                 return { ...prev };
             }
 
             const prevTime = new Date(prev.date).getTime();
             const nextTime = new Date(next.date).getTime();
             const totalDuration = nextTime - prevTime;
-            const transitTime = 60 * 24 * 60 * 60 * 1000;
+            
+            let moveFraction = (dateTime - prevTime) / totalDuration;
+            moveFraction = Math.max(0, Math.min(1, moveFraction));
 
             let lngDiff = next.lng - prev.lng;
             if (lngDiff > 180) lngDiff -= 360;
             else if (lngDiff < -180) lngDiff += 360;
 
             const route = getMaritimeRoute(prev, next);
-            const isLongDistance = Math.abs(prev.lat - next.lat) > 10 || Math.abs(lngDiff) > 15 || route.length > 2;
-            let moveFraction = 0;
+            // Reducimos el umbral de 'LongDistance' para forzar ruteo en más casos
+            const isLongDistance = Math.abs(prev.lat - next.lat) > 5 || Math.abs(lngDiff) > 8 || route.length > 2;
 
-            moveFraction = (dateTime - prevTime) / totalDuration;
-
-            moveFraction = Math.max(0, Math.min(1, moveFraction));
-
-            let mapLat = prev.lat;
-            let mapLng = prev.lng;
-
+            let mapLat, mapLng;
             if (isLongDistance) {
                 const pos = interpolatePath(route, moveFraction);
                 mapLat = pos.lat;
@@ -675,23 +696,18 @@
                 mapLng = prev.lng + lngDiff * moveFraction;
             }
 
-            if (moveFraction === 0 && prev.status === "Desplegado") {
-                const patrolPhase = dateTime / (1000 * 60 * 60 * 24 * 3); // Órbita de 3 días
-                mapLat += Math.sin(patrolPhase) * 0.15; // Radio dinámico ultra corto (aprox 15 km)
-                mapLng += Math.cos(patrolPhase) * 0.2;
+            // Efecto de patrulla solo para buques desplegados fuera de puerto
+            if (moveFraction === 1 || (prev.status === "Desplegado" && moveFraction > 0.1)) {
+                // Pequeña oscilación si el buque está 'estacionado' en su destino
+                if (moveFraction > 0.95) {
+                    const patrolPhase = dateTime / (1000 * 60 * 60 * 24 * 3);
+                    mapLat += Math.sin(patrolPhase) * 0.05;
+                    mapLng += Math.cos(patrolPhase) * 0.08;
+                }
             }
-
-            let computedStatus = prev.status;
-            let computedName = prev.name;
-            let computedDesc = prev.desc;
-
-            // Omitido: El tránsito oceánico ya no sobrescribe OSINT.
 
             return {
                 ...prev,
-                status: computedStatus,
-                name: computedName,
-                desc: computedDesc,
                 lat: mapLat,
                 lng: mapLng
             };
@@ -709,6 +725,7 @@
                 let isVisible = true;
                 if (activeFaction === 'OTAN' && !["EE.UU.", "Italia", "Francia", "Reino Unido", "España"].includes(c.country)) isVisible = false;
                 if (activeFaction === 'Otros' && !["China", "Rusia", "India"].includes(c.country)) isVisible = false;
+                
                 if (c.launched) {
                     const launchTime = new Date(c.launched).getTime();
                     if (!isNaN(launchTime) && currentDate.getTime() < launchTime) isVisible = false;
@@ -730,7 +747,7 @@
             document.getElementById('stats-maintenance').textContent = stats.maintenance;
         }
 
-        let accordionState = { "EE.UU.": true, "China": true, "Rusia": true, "India": true, "Italia": true, "Francia": true, "Reino Unido": true, "España": true, "OTAN y Aliados": true, "Otros": true };
+        let accordionState = { "EE.UU.": true, "China": true, "Rusia": true, "India": true, "Italia": true, "Francia": true, "Reino Unido": true, "España": true, "Japón": true, "Turquía": true, "Brasil": true, "Tailandia": true, "OTAN y Aliados": true, "Otros": true };
         const globalFlags = {
             "EE.UU.": '<img src="https://flagcdn.com/w20/us.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="US">',
             "China": '<img src="https://flagcdn.com/w20/cn.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="CN">',
@@ -739,7 +756,11 @@
             "Francia": '<img src="https://flagcdn.com/w20/fr.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="FR">',
             "Reino Unido": '<img src="https://flagcdn.com/w20/gb.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="UK">',
             "España": '<img src="https://flagcdn.com/w20/es.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="ES">',
-            "India": '<img src="https://flagcdn.com/w20/in.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="IN">'
+            "India": '<img src="https://flagcdn.com/w20/in.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="IN">',
+            "Japón": '<img src="https://flagcdn.com/w20/jp.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="JP">',
+            "Turquía": '<img src="https://flagcdn.com/w20/tr.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="TR">',
+            "Brasil": '<img src="https://flagcdn.com/w20/br.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="BR">',
+            "Tailandia": '<img src="https://flagcdn.com/w20/th.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="TH">'
         };
 
         let activeFaction = 'Todos'; // 'Todos', 'OTAN', 'Otros'
@@ -771,8 +792,8 @@
             });
 
             const macroBlocks = {
-                "OTAN y Aliados": { icon: "🛡️", countries: ["EE.UU.", "Reino Unido", "Francia", "Italia", "España"] },
-                "Otros": { icon: "⚔️", countries: ["China", "Rusia", "India"] }
+                "OTAN y Aliados": { icon: "🛡️", countries: ["EE.UU.", "Reino Unido", "Francia", "Italia", "España", "Japón", "Turquía"] },
+                "Otros": { icon: "⚔️", countries: ["China", "Rusia", "India", "Brasil", "Tailandia"] }
             };
 
             const carriersByCountry = {};
@@ -790,15 +811,16 @@
                 blockCountries.forEach(countryKey => {
                     if (!carriersByCountry[countryKey]) return;
                     const carriersList = carriersByCountry[countryKey].filter(c => {
+                        let isVisible = true;
                         if (c.launched) {
                             const launchTime = new Date(c.launched).getTime();
-                            if (!isNaN(launchTime) && currentDate.getTime() < launchTime) return false;
+                            if (!isNaN(launchTime) && currentDate.getTime() < launchTime) isVisible = false;
                         }
                         if (c.decommissioned) {
                             const decommTime = new Date(c.decommissioned).getTime();
-                            if (!isNaN(decommTime) && currentDate.getTime() >= decommTime) return false;
+                            if (!isNaN(decommTime) && currentDate.getTime() >= decommTime) isVisible = false;
                         }
-                        return true;
+                        return isVisible;
                     });
                     if (carriersList.length === 0) return;
                     macroTotal += carriersList.length;
@@ -809,14 +831,20 @@
                         let statusColor = "bg-blue-500";
                         if (state.status === "Desplegado") statusColor = "bg-red-500";
                         if (state.status === "Mantenimiento") statusColor = "bg-slate-500";
-                        return `<div class="p-3 ml-2 rounded-lg border cursor-pointer transition-all flex items-center justify-between group ${isActive ? 'bg-blue-600/20 border-blue-500 shadow-lg' : 'bg-slate-900/40 border-slate-800 hover:border-slate-600'}" onclick="selectCarrier('${c.id}')">
-                            <div class="flex items-center gap-3">
-                                <div class="w-1.5 h-8 ${statusColor} rounded-full"></div>
-                                <div><p class="text-xs font-black text-white">${c.hull}</p><p class="text-[10px] text-slate-500 font-bold uppercase truncate max-w-[150px]">${c.name}</p></div>
+                        return `<div class="p-2 ml-2 rounded-lg border cursor-pointer transition-all flex items-center justify-between group ${isActive ? 'bg-blue-600/20 border-blue-500 shadow-lg' : 'bg-slate-900/40 border-slate-800 hover:border-slate-600'}" onclick="selectCarrier('${c.id}')">
+                            <div class="flex items-center gap-3 overflow-hidden">
+                                <div class="w-1.5 h-10 ${statusColor} rounded-full shrink-0"></div>
+                                <div class="w-12 h-10 bg-slate-800 rounded overflow-hidden shrink-0 border border-slate-700">
+                                    <img src="${c.photo}" alt="${c.hull}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" onerror="this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?w=100&q=50'">
+                                </div>
+                                <div class="truncate">
+                                    <p class="text-xs font-black text-white">${c.hull}</p>
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase truncate">${c.name}</p>
+                                </div>
                             </div>
-                            <div class="text-right flex flex-col items-end">
-                                <div class="bg-yellow-500/20 border border-yellow-500/50 rounded px-1 py-0.5 mb-1 inline-block shadow max-w-fit"><p class="text-[10px] font-black text-yellow-500 tracking-tight">OSINT: ${state.date}</p></div>
-                                <p class="text-[9px] font-mono text-slate-500 truncate max-w-[90px]">${state.name}</p>
+                            <div class="text-right flex flex-col items-end shrink-0 ml-2">
+                                <div class="bg-yellow-500/20 border border-yellow-500/50 rounded px-1 py-0.5 mb-1 inline-block shadow"><p class="text-[9px] font-black text-yellow-500 tracking-tight">OSINT: ${state.date}</p></div>
+                                <p class="text-[9px] font-mono text-slate-500 truncate max-w-[70px]">${state.name}</p>
                             </div>
                         </div>`;
                     }).join('');
@@ -876,33 +904,34 @@
         }
 
         function updateMarkers() {
-            CARRIERS.forEach(c => {
+            // Limpia TODOS los marcadores previos (ahora almacenados en arrays para el ruteo cilíndrico)
+            Object.values(mapMarkers).forEach(markerArray => {
+                if (Array.isArray(markerArray)) markerArray.forEach(m => map.removeLayer(m));
+                else if (markerArray) map.removeLayer(markerArray); 
+            });
+            mapMarkers = {};
+
+            const filtered = CARRIERS.filter(c => {
                 let isVisible = true;
                 if (activeFaction === 'OTAN' && !["EE.UU.", "Italia", "Francia", "Reino Unido", "España"].includes(c.country)) isVisible = false;
                 if (activeFaction === 'Otros' && !["China", "Rusia", "India"].includes(c.country)) isVisible = false;
 
-                if (c.launched) {
+                if (isVisible && c.launched) {
                     const launchTime = new Date(c.launched).getTime();
                     if (!isNaN(launchTime) && currentDate.getTime() < launchTime) isVisible = false;
                 }
-                if (c.decommissioned) {
+                if (isVisible && c.decommissioned) {
                     const decommTime = new Date(c.decommissioned).getTime();
                     if (!isNaN(decommTime) && currentDate.getTime() >= decommTime) isVisible = false;
                 }
 
-                if (!isVisible) {
-                    if (mapMarkers[c.id]) {
-                        map.removeLayer(mapMarkers[c.id]);
-                        delete mapMarkers[c.id];
-                    }
-                    if (selectedCarrierId === c.id) {
-                        selectedCarrierId = null;
-                        document.getElementById('carrier-details').classList.add('hidden');
-                        if (mapPath) { map.removeLayer(mapPath); mapPath = null; }
-                    }
-                    return;
-                }
+                const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     c.hull.toLowerCase().includes(searchQuery.toLowerCase());
+                
+                return isVisible && matchesSearch;
+            });
 
+            filtered.forEach(c => {
                 const state = getCarrierStateAtDate(c, currentDate);
                 const isSelected = selectedCarrierId === c.id;
                 const isDeployed = state.status === "Desplegado";
@@ -923,7 +952,7 @@
                       <line x1="22" y1="44" x2="34" y2="20" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
                     </svg>
                     <div class="absolute -top-1 -right-2 bg-slate-950 rounded px-0.5 py-0.5 flex items-center justify-center text-[12px] shadow-[0_4px_10px_rgba(0,0,0,0.9)] border border-slate-700 z-10 opacity-95" style="pointer-events: auto;">
-                        ${globalFlags[c.country] || "🏴"}
+                        ${globalFlags[c.country] || globalFlags["EE.UU."] || "🏴"}
                     </div>
                 </div>`;
 
@@ -941,16 +970,27 @@
                     ${state.sources && state.sources[0] ? `<a href="${state.sources[0].url === '#' ? 'https://google.com/search?q=' + encodeURIComponent(c.name + ' ' + state.sources[0].name) : state.sources[0].url}" target="_blank" class="inline-block text-blue-600 underline text-xs font-semibold hover:text-blue-800">Ver fuente OSINT: ${state.sources[0].name}</a>` : ''}
                 </div>`;
 
-                if (mapMarkers[c.id]) {
-                    mapMarkers[c.id].setLatLng([state.lat, state.lng]);
-                    mapMarkers[c.id].setIcon(icon);
-                    mapMarkers[c.id].setPopupContent(popupHtml);
-                } else {
-                    const m = L.marker([state.lat, state.lng], { icon: icon }).addTo(map);
+                // --- SISTEMA DE DESPLAZAMIENTO (DE-CONFLICTION) ---
+                // Si dos barcos están en el mismo punto, aplicamos un jitter determinista pero pequeño
+                const jitterLat = (parseInt(c.id, 36) % 10 - 5) * 0.005; 
+                const jitterLng = (parseInt(c.id, 36) % 10 - 5) * 0.005;
+                const finalLat = state.lat + jitterLat;
+                const finalLng = state.lng + jitterLng;
+
+                // Soporte Cilíndrico: Dibujar en mundo central y copias adyacentes
+                mapMarkers[c.id] = [];
+                [finalLng, finalLng + 360, finalLng - 360].forEach(lng => {
+                    const iconInstance = L.divIcon({
+                        className: 'custom-icon',
+                        html: carrierSvg,
+                        iconSize: [svgWidth, svgHeight],
+                        iconAnchor: [svgWidth / 2, svgHeight / 2]
+                    });
+                    const m = L.marker([finalLat, lng], { icon: iconInstance }).addTo(map);
                     m.on('click', () => selectCarrier(c.id));
                     m.bindPopup(popupHtml, { offset: [0, -10], autoClose: false });
-                    mapMarkers[c.id] = m;
-                }
+                    mapMarkers[c.id].push(m);
+                });
             });
             if (selectedCarrierId) {
                 const carrier = CARRIERS.find(c => c.id === selectedCarrierId);
@@ -973,9 +1013,42 @@
             selectedCarrierId = id;
             const carrier = CARRIERS.find(c => c.id === id);
             const state = getCarrierStateAtDate(carrier, currentDate);
+            
+            // Llenar datos de cabecera en el panel lateral
             document.getElementById('carrier-details').classList.remove('hidden');
             document.getElementById('detail-name').textContent = carrier.name;
             document.getElementById('detail-class').textContent = `${carrier.hull} // ${carrier.cls}`;
+            
+            // Actualizar fotos y expediente (Wiki)
+            const specs = WIKI_SPECS[carrier.cls] || { displacement: "Desconocido", length: "Desconocido", propulsion: "Desconocido", airWing: "Desconocido", radar: "Desconocido", weapons: "Desconocido" };
+            document.getElementById('wiki-title').textContent = `${carrier.hull} ${carrier.name}`;
+            document.getElementById('wiki-class').textContent = carrier.cls;
+            
+            // Carga optimizada de fotos con fallback forzado
+            const photoEl = document.getElementById('wiki-photo');
+            photoEl.style.opacity = '0';
+            const fallbackSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%231e293b'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23334155' font-family='monospace' font-size='24' font-weight='bold'%3E${carrier.hull} ${carrier.name}%3C/text%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' fill='%231e293b' font-family='monospace' font-size='14'%3EINTELIGENCIA VISUAL NO DISPONIBLE EN RED LOCAL%3C/text%3E%3C/svg%3E`;
+
+            if (carrier.photo) {
+                photoEl.src = carrier.photo;
+                photoEl.onerror = () => { 
+                    photoEl.src = fallbackSvg;
+                    photoEl.onerror = null;
+                };
+            } else {
+                photoEl.src = fallbackSvg;
+            }
+            
+            document.getElementById('wiki-displacement').textContent = specs.displacement;
+            document.getElementById('wiki-length').textContent = specs.length;
+            document.getElementById('wiki-propulsion').textContent = specs.propulsion;
+            document.getElementById('wiki-airwing').textContent = specs.airWing;
+            document.getElementById('wiki-radar').textContent = specs.radar;
+            document.getElementById('wiki-weapons').textContent = specs.weapons;
+            
+            // Re-renderizar para mostrar el rastro del buque seleccionado
+            updateMarkers();
+
             if (carrier.launched && carrier.commissioned) {
                 const bajaText = carrier.decommissioned ? carrier.decommissioned : "En Servicio";
                 document.getElementById('detail-dates').textContent = `Botadura: ${carrier.launched} | Alta: ${carrier.commissioned} | Baja: ${bajaText}`;
@@ -1012,10 +1085,25 @@
             });
             
             document.getElementById('btn-open-wiki').onclick = () => {
-                const specs = WIKI_SPECS[carrier.cls] || { displacement: "Desconocido", length: "Desconocido", propulsion: "Desconocido", airWing: "Desconocido", radar: "Desconocido", weapons: "Desconocido" };
-                document.getElementById('wiki-title').textContent = `${carrier.hull} ${carrier.name}`;
-                document.getElementById('wiki-class').textContent = carrier.cls;
-                document.getElementById('wiki-photo').src = carrier.photo || 'https://images.unsplash.com/photo-1549556150-1cdef237b671?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
+                // Carga optimizada de fotos con fallback forzado
+                const photoEl = document.getElementById('wiki-photo');
+                photoEl.style.opacity = '0';
+                
+                // Fallback SVG dinámico como Data URI
+                const fallbackSvg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%231e293b'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23334155' font-family='monospace' font-size='24' font-weight='bold'%3E${carrier.hull} ${carrier.name}%3C/text%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' fill='%231e293b' font-family='monospace' font-size='14'%3EINTELIGENCIA VISUAL NO DISPONIBLE EN RED LOCAL%3C/text%3E%3C/svg%3E`;
+
+                if (carrier.photo) {
+                    photoEl.onload = () => { photoEl.style.opacity = '1'; };
+                    photoEl.src = carrier.photo;
+                    photoEl.onerror = () => { 
+                        photoEl.src = fallbackSvg;
+                        photoEl.style.opacity = '1'; // Asegurar visibilidad del fallback
+                        photoEl.onerror = null;
+                    };
+                } else {
+                    photoEl.src = fallbackSvg;
+                    photoEl.style.opacity = '1';
+                }
                 document.getElementById('wiki-displacement').textContent = specs.displacement;
                 document.getElementById('wiki-length').textContent = specs.length;
                 document.getElementById('wiki-propulsion').textContent = specs.propulsion;
@@ -1270,8 +1358,23 @@
         };
 
         window.onload = () => {
-            document.getElementById('date-picker').max = formatLocalDateString(new Date());
+            console.log("OSINT Console: Iniciando sistemas...");
+            const now = new Date();
+            document.getElementById('date-picker').max = formatLocalDateString(now);
+            
+            // Forzar actualización inicial
+            END_DATE = now.getTime();
+            currentDate = new Date(END_DATE);
+            document.getElementById('timeline-slider').value = 100;
+            
             updateTime();
+            
+            // Pequeño retardo para asegurar que el DOM y el mapa están listos
+            setTimeout(() => {
+                map.invalidateSize();
+                updateMarkers();
+                console.log("OSINT Console: Sistemas en línea. Flota localizada.");
+            }, 300);
         };
     </script>
     
@@ -1281,9 +1384,9 @@
         <div class="relative bg-slate-900/95 shadow-[0_0_80px_rgba(0,0,0,0.9)] max-w-3xl w-full mx-4 rounded-xl border border-blue-900/30 overflow-hidden backdrop-blur-xl flex flex-col max-h-[90vh]">
             
             <!-- Hero Banner Dinámico Fotográfico -->
-            <div class="w-full h-56 sm:h-72 bg-slate-900 relative shrink-0">
-                <img id="wiki-photo" src="" alt="OSINT Photo" class="w-full h-full object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700" onerror="this.src='https://images.unsplash.com/photo-1549556150-1cdef237b671?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+            <div class="w-full h-56 sm:h-72 bg-slate-800 relative shrink-0 overflow-hidden">
+                <img id="wiki-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%231e293b'/%3E%3Cpath d='M400 150v150m-75-75h150' stroke='%23334155' stroke-width='4'/%3E%3C/svg%3E" alt="OSINT Photo" class="w-full h-full object-cover opacity-100 block transition-opacity duration-700" onload="this.style.opacity=1;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%23111827'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23374151' font-family='monospace' font-size='20'%3EIMAGEN NO DISPONIBLE EN RED LOCAL%3C/text%3E%3C/svg%3E'">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                 <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
                     <div class="flex items-center gap-3 bg-black/60 px-3 py-1.5 rounded border border-red-900/50 backdrop-blur-md shadow-lg">
                         <div class="h-2 w-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,1)]"></div>
