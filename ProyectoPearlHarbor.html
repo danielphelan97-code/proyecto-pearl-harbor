@@ -777,7 +777,7 @@
             document.getElementById('stats-maintenance').textContent = stats.maintenance;
         }
 
-        let accordionState = { "EE.UU.": true, "China": true, "Rusia": true, "India": true, "Italia": true, "Francia": true, "Reino Unido": true, "España": true, "Japón": true, "Turquía": true, "Brasil": true, "Tailandia": true, "OTAN y Aliados": true, "Otros": true };
+        let accordionState = { "EE.UU.": true, "China": true, "Rusia": true, "India": true, "Italia": true, "Francia": true, "Reino Unido": true, "España": true, "Japón": true, "Turquía": true, "Brasil": true, "Tailandia": true, "Irán": true, "OTAN y Aliados": true, "Otros": true };
         const globalFlags = {
             "EE.UU.": '<img src="https://flagcdn.com/w20/us.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="US">',
             "China": '<img src="https://flagcdn.com/w20/cn.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="CN">',
@@ -790,7 +790,8 @@
             "Japón": '<img src="https://flagcdn.com/w20/jp.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="JP">',
             "Turquía": '<img src="https://flagcdn.com/w20/tr.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="TR">',
             "Brasil": '<img src="https://flagcdn.com/w20/br.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="BR">',
-            "Tailandia": '<img src="https://flagcdn.com/w20/th.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="TH">'
+            "Tailandia": '<img src="https://flagcdn.com/w20/th.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="TH">',
+            "Irán": '<img src="https://flagcdn.com/w20/ir.png" class="w-4 h-3 inline pb-[1px] object-cover rounded shadow-sm" alt="IR">'
         };
 
         let activeFaction = 'Todos'; // 'Todos', 'OTAN', 'Otros'
@@ -816,14 +817,14 @@
                 if (!matchesSearch) return false;
                 
                 if (activeFaction === 'OTAN' && !["EE.UU.", "Italia", "Francia", "Reino Unido", "España"].includes(c.country)) return false;
-                if (activeFaction === 'Otros' && !["China", "Rusia", "India"].includes(c.country)) return false;
+                if (activeFaction === 'Otros' && !["China", "Rusia", "India", "Irán", "Brasil", "Tailandia"].includes(c.country)) return false;
                 
                 return true;
             });
 
             const macroBlocks = {
                 "OTAN y Aliados": { icon: "🛡️", countries: ["EE.UU.", "Reino Unido", "Francia", "Italia", "España", "Japón", "Turquía"] },
-                "Otros": { icon: "⚔️", countries: ["China", "Rusia", "India", "Brasil", "Tailandia"] }
+                "Otros": { icon: "⚔️", countries: ["China", "Rusia", "India", "Irán", "Brasil", "Tailandia"] }
             };
 
             const carriersByCountry = {};
@@ -987,9 +988,17 @@
                       <rect x="36" y="28" width="6" height="12" fill="#1e293b" />
                       <line x1="32" y1="10" x2="32" y2="56" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
                       <line x1="22" y1="44" x2="34" y2="20" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
+                      ${c.type === 'drone-carrier' ? `
+                      <g transform="translate(42, 12) scale(0.6)">
+                        <circle cx="8" cy="8" r="8" fill="#10b981" stroke="white" stroke-width="1.5"/>
+                        <path d="M 4 4 L 12 12 M 12 4 L 4 12" stroke="white" stroke-width="2"/>
+                      </g>` : ''}
                     </svg>
                     <div class="absolute -top-1 -right-2 bg-slate-950 rounded px-0.5 py-0.5 flex items-center justify-center text-[12px] shadow-[0_4px_10px_rgba(0,0,0,0.9)] border border-slate-700 z-10 opacity-95" style="pointer-events: auto;">
                         ${globalFlags[c.country] || globalFlags["EE.UU."] || "🏴"}
+                    </div>
+                    <div class="absolute -bottom-2 right-0 bg-blue-600 text-white font-black px-1 py-0.5 rounded-[2px] text-[7px] shadow-lg border border-blue-400/50 z-20 pointer-events-none transform translate-x-1">
+                        ${c.hull}
                     </div>
                 </div>`;
 
@@ -1097,7 +1106,7 @@
                     console.log("OSINT Load:", finalUrl);
                     photoEl.onerror = () => {
                         console.warn("Load Failed. Using Placeholder.");
-                        photoEl.src = './assets/ships/placeholder_carrier.png';
+                        photoEl.src = './assets/ships/tactical_placeholder_intel.png';
                         photoEl.style.opacity = '1';
                     };
                     photoEl.onload = () => { 
@@ -1105,7 +1114,7 @@
                     };
                     photoEl.src = finalUrl;
                 } else {
-                    photoEl.src = './assets/ships/placeholder_carrier.png';
+                    photoEl.src = './assets/ships/tactical_placeholder_intel.png';
                     photoEl.style.opacity = '1';
                 }
             };

@@ -2879,7 +2879,7 @@ const CARRIERS = [
         "hull": "CVN-79",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/uss_kennedy_cvn79.png",
         "launched": "29 Oct 2019",
         "commissioned": "2025",
         "history": [
@@ -2966,7 +2966,7 @@ const CARRIERS = [
         "hull": "CVN-80",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/uss_enterprise_cvn80.png",
         "launched": "Nov 2025",
         "commissioned": "2028",
         "history": [
@@ -3260,7 +3260,7 @@ const CARRIERS = [
         "hull": "C 551",
         "cls": "Clase Garibaldi (Marina Militare)",
         "country": "Italia",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/ita_garibaldi_c551.png",
         "launched": "4 Jun 1983",
         "commissioned": "30 Sep 1985",
         "history": [
@@ -3347,7 +3347,7 @@ const CARRIERS = [
         "name": "Liaoning",
         "hull": "CV-16",
         "cls": "Clase Tipo 001 (PLAN)",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/plan_liaoning_cv16.png",
         "launched": "4 Dec 1988",
         "commissioned": "25 Sep 2012",
         "history": [
@@ -3569,7 +3569,7 @@ const CARRIERS = [
         "name": "Shandong",
         "hull": "CV-17",
         "cls": "Clase Tipo 002 (PLAN)",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/plan_shandong_cv17.png",
         "launched": "26 Apr 2017",
         "commissioned": "17 Dec 2019",
         "history": [
@@ -3983,7 +3983,7 @@ const CARRIERS = [
         "name": "Admiral Kuznetsov",
         "hull": "063",
         "cls": "Clase Kuznetsov (VMF)",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/vmf_kuznetsov_063.png",
         "launched": "1985-12-04",
         "commissioned": "1991-01-20",
         "history": [
@@ -4055,7 +4055,7 @@ const CARRIERS = [
         "hull": "R33",
         "cls": "Clase Gorshkov Mod.",
         "country": "India",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/ins_vikramaditya_r33.png",
         "launched": "1982-03-31",
         "commissioned": "2013-11-16",
         "history": [
@@ -4097,7 +4097,7 @@ const CARRIERS = [
         "hull": "DDH-183",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/jmsdf_izumo_183.png",
         "launched": "2013-08-06",
         "commissioned": "2015-03-25",
         "history": [
@@ -4184,7 +4184,7 @@ const CARRIERS = [
         "hull": "DDH-184",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/jmsdf_kaga_184.png",
         "launched": "2015-08-27",
         "commissioned": "2017-03-22",
         "history": [
@@ -4226,7 +4226,8 @@ const CARRIERS = [
         "hull": "L-400",
         "cls": "Porta-Drones (Turquía)",
         "country": "Turquía",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/tur_anadolu_l400.png",
+        "type": "drone-carrier",
         "launched": "2019-04-30",
         "commissioned": "2023-04-10",
         "history": [
@@ -4298,7 +4299,7 @@ const CARRIERS = [
         "hull": "A140",
         "cls": "Multiproposito (Brasil)",
         "country": "Brasil",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/bra_atlantico_a140.png",
         "launched": "1998-02-20",
         "commissioned": "2018-06-29",
         "history": [
@@ -4355,7 +4356,7 @@ const CARRIERS = [
         "hull": "911",
         "cls": "Portaaviones (Tailandia)",
         "country": "Tailandia",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/thai_naruebet_911.png",
         "launched": "1996-01-20",
         "commissioned": "1997-03-20",
         "history": [
@@ -4382,7 +4383,7 @@ const CARRIERS = [
         "name": "INS Vikrant",
         "hull": "R11",
         "cls": "Infantería (CAC) Autóctona",
-        "photo": "./assets/ships/tactical_placeholder_intel.png",
+        "photo": "./assets/ships/ins_vikrant_r11.png",
         "launched": "2013-08-12",
         "commissioned": "2022-09-02",
         "history": [
@@ -4505,6 +4506,39 @@ const CARRIERS = [
                         "url": "#"
                     }
                 ]
+            }
+        ]
+    },
+    {
+        "id": "bagheri",
+        "name": "Shahid Bagheri",
+        "hull": "IRGCN",
+        "cls": "Porta-Drones (Irán)",
+        "country": "Irán",
+        "photo": "./assets/ships/iran_bagheri_irgcn.png",
+        "type": "drone-carrier",
+        "launched": "2024-02",
+        "commissioned": "2025-03",
+        "history": [
+            {
+                "date": "2024-02-15",
+                "lat": 27.183,
+                "lng": 56.267,
+                "name": "Astillero Shahid Darvishi, Bandar Abbas",
+                "status": "Astillero",
+                "op": "Conversión Hull",
+                "desc": "Se observa la adición de una pista de aterrizaje angulada de 180 metros sobre un casco de portacontenedores.",
+                "sources": [{ "name": "OSINT Iran", "url": "#" }]
+            },
+            {
+                "date": "2026-03-24",
+                "lat": 25.5,
+                "lng": 58.5,
+                "name": "Mar de Omán",
+                "status": "Desplegado",
+                "op": "Vigilancia Estrecho",
+                "desc": "Operando como base avanzada de drones Shahed y Mohajer-6 monitorizando el tráfico en el Estrecho de Ormuz.",
+                "sources": [{ "name": "IRGCN Intelligence", "url": "#" }]
             }
         ]
     }
