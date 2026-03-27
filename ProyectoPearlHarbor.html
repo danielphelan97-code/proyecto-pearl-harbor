@@ -981,32 +981,39 @@
                 const strokeColor = isSelected ? "#60a5fa" : "white";
 
                 const carrierSvg = `
-                <div class="relative flex items-center justify-center pointer-events-none" style="width: ${svgWidth}px; height: ${svgHeight}px;">
-                    <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.6)); ${isDeployed ? 'animation: pulse 2s infinite;' : ''} ${isSelected ? 'transform: scale(1.1);' : ''} transition: transform 0.2s;">
-                      <path d="M 28 4 L 36 4 L 40 12 L 40 54 L 32 62 L 24 54 L 24 12 Z" fill="${color}" stroke="${strokeColor}" stroke-width="${isSelected ? '2.5' : '1.5'}"/>
-                      <polygon points="24 20, 14 46, 24 46" fill="${color}" stroke="${strokeColor}" stroke-width="${isSelected ? '1.5' : '1'}"/>
-                      <rect x="36" y="28" width="6" height="12" fill="#1e293b" />
-                      <line x1="32" y1="10" x2="32" y2="56" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
-                      <line x1="22" y1="44" x2="34" y2="20" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
-                      ${c.type === 'drone-carrier' ? `
-                      <g transform="translate(42, 12) scale(0.6)">
-                        <circle cx="8" cy="8" r="8" fill="#10b981" stroke="white" stroke-width="1.5"/>
-                        <path d="M 4 4 L 12 12 M 12 4 L 4 12" stroke="white" stroke-width="2"/>
-                      </g>` : ''}
-                    </svg>
-                    <div class="absolute -top-1 -right-2 bg-slate-950 rounded px-0.5 py-0.5 flex items-center justify-center text-[12px] shadow-[0_4px_10px_rgba(0,0,0,0.9)] border border-slate-700 z-10 opacity-95" style="pointer-events: auto;">
-                        ${globalFlags[c.country] || globalFlags["EE.UU."] || "🏴"}
+                <div class="relative flex flex-col items-center pointer-events-none" style="width: 100px; transform: translateY(-${svgHeight/2}px);">
+                    <!-- Icono del Buque -->
+                    <div style="width: ${svgWidth}px; height: ${svgHeight}px;" class="flex items-center justify-center relative">
+                        <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.6)); ${isDeployed ? 'animation: pulse 2s infinite;' : ''} ${isSelected ? 'transform: scale(1.1);' : ''} transition: transform 0.2s;">
+                          <path d="M 28 4 L 36 4 L 40 12 L 40 54 L 32 62 L 24 54 L 24 12 Z" fill="${color}" stroke="${strokeColor}" stroke-width="${isSelected ? '2.5' : '1.5'}"/>
+                          <polygon points="24 20, 14 46, 24 46" fill="${color}" stroke="${strokeColor}" stroke-width="${isSelected ? '1.5' : '1'}"/>
+                          <rect x="36" y="28" width="6" height="12" fill="#1e293b" />
+                          <line x1="32" y1="10" x2="32" y2="56" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
+                          <line x1="22" y1="44" x2="34" y2="20" stroke="rgba(255,255,255,0.6)" stroke-width="1" stroke-dasharray="3,3"/>
+                        </svg>
+                        ${c.type === 'drone-carrier' ? `
+                        <div class="absolute -top-1 -left-1 bg-emerald-600 rounded-full p-0.5 border border-white shadow-[0_0_8px_rgba(16,185,129,0.5)] z-30">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                        </div>` : ''}
                     </div>
-                    <div class="absolute -bottom-2 right-0 bg-blue-600 text-white font-black px-1 py-0.5 rounded-[2px] text-[7px] shadow-lg border border-blue-400/50 z-20 pointer-events-none transform translate-x-1">
-                        ${c.hull}
+
+                    <!-- BLOQUE DE DATOS TÁCTICOS (TDB) -->
+                    <div class="mt-1 bg-slate-950/95 border ${isSelected ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'border-slate-700/80'} rounded px-1.5 py-1 flex flex-col items-center shadow-2xl backdrop-blur-md min-w-[65px] max-w-[110px]">
+                        <div class="flex items-center gap-1.5 border-b border-slate-800 pb-0.5 mb-1 w-full justify-center">
+                            <div class="shrink-0 flex items-center">${globalFlags[c.country] || "🏴"}</div>
+                            <span class="text-[10px] font-black text-blue-400 font-mono tracking-tighter uppercase whitespace-nowrap">${c.hull}</span>
+                        </div>
+                        <span class="text-[8px] font-black text-white uppercase tracking-tight whitespace-nowrap overflow-hidden text-ellipsis w-full text-center px-0.5">
+                            ${c.name}
+                        </span>
                     </div>
                 </div>`;
 
                 const icon = L.divIcon({
                     className: 'custom-icon',
                     html: carrierSvg,
-                    iconSize: [svgWidth, svgHeight],
-                    iconAnchor: [svgWidth / 2, svgHeight / 2]
+                    iconSize: [100, 80],
+                    iconAnchor: [50, 24]
                 });
                 const popupHtml = `
                 <div class="min-w-[240px] text-slate-200">
