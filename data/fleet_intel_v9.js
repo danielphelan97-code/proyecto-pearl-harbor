@@ -2330,13 +2330,23 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2026-03-10",
+                "lat": 36.621,
+                "lng": -6.333,
+                "name": "Base Naval de Rota (Muelles 1 y 2)",
+                "status": "En Puerto",
+                "op": "Aprovisionamiento Logístico",
+                "desc": "Carga de munición y víveres para despliegue prolongado en el flanco sur.",
+                "sources": [{ "name": "Armada Española", "url": "#" }]
+            },
+            {
                 "date": "2026-03-24",
-                "lat": 34,
-                "lng": 25,
-                "name": "Mar Mediterráneo",
+                "lat": 36,
+                "lng": -8,
+                "name": "Golfo de Cádiz / Estrecho",
                 "status": "Desplegado",
                 "op": "Misión DÉDALO 26",
-                "desc": "Liderando la fuerza anfibia de respuesta rápida; los Harrier AV-8B+ operan en misiones de CAP permanentes.",
+                "desc": "Liderando la fuerza anfibia de respuesta rápida en tránsito hacia el Mediterráneo; los Harrier AV-8B+ operan en misiones de CAP permanentes.",
                 "sources": [
                     {
                         "name": "Armada Española",
@@ -4277,10 +4287,20 @@ const CARRIERS = [
                 ]
             },
             {
+                "date": "2026-03-15",
+                "lat": 41.0,
+                "lng": 29.0,
+                "name": "Estambul (Paso del Bósforo)",
+                "status": "En Puerto",
+                "op": "Mantenimiento Preventivo",
+                "desc": "Briefing táctico con el alto mando naval en Estambul tras completar patrullas en el Mar Negro.",
+                "sources": [{ "name": "Turkish Navy", "url": "#" }]
+            },
+            {
                 "date": "2026-03-24",
-                "lat": 34,
-                "lng": 25,
-                "name": "Mar Mediterráneo",
+                "lat": 36.5,
+                "lng": 28.5,
+                "name": "Mar Mediterráneo (Sur de Rodas)",
                 "status": "Desplegado",
                 "op": "Vigilancia Mediterránea",
                 "desc": "Base avanzada de drones monitorizando las costas de Levante; integración total con el CMS GENESIS.",
@@ -4519,6 +4539,13 @@ const CARRIERS = [
         "type": "drone-carrier",
         "launched": "2024-02",
         "commissioned": "2025-03",
+        "specs": {
+            "displacement": "40,000 t",
+            "length": "240 m",
+            "speed": "18 knots",
+            "airWing": "30x Drones (Shahed-129, Shahed-191, Mohajer-6)",
+            "weapons": "2x 30mm CIWS, 8x Anti-ship Missiles"
+        },
         "history": [
             {
                 "date": "2024-02-15",
@@ -4531,12 +4558,6 @@ const CARRIERS = [
                 "sources": [{ "name": "OSINT Iran", "url": "#" }]
             },
             {
-                "date": "2026-03-24",
-                "lat": 25.5,
-                "lng": 58.5,
-                "name": "Mar de Omán",
-                "status": "Desplegado",
-                "op": "Vigilancia Estrecho",
                 "desc": "Operando como base avanzada de drones Shahed y Mohajer-6 monitorizando el tráfico en el Estrecho de Ormuz.",
                 "sources": [{ "name": "IRGCN Intelligence", "url": "#" }]
             }
