@@ -506,7 +506,7 @@ const CARRIERS = [
         "hull": "CVN-68",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn68.png",
+        "photo": "./assets/ships/uss_nimitz_cvn68.png",
         "launched": "1972-05-13",
         "commissioned": "1975-05-03",
         "history": [
@@ -743,7 +743,7 @@ const CARRIERS = [
         "hull": "CVN-69",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn69.png",
+        "photo": "./assets/ships/uss_ike_cvn69.png",
         "launched": "1975-10-11",
         "commissioned": "1977-10-18",
         "history": [
@@ -1010,7 +1010,7 @@ const CARRIERS = [
         "hull": "CVN-70",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn70.png",
+        "photo": "./assets/ships/uss_vinson_cvn70.png",
         "launched": "15 Mar 1980",
         "commissioned": "13 Mar 1982",
         "history": [
@@ -1188,7 +1188,7 @@ const CARRIERS = [
         "hull": "CVN-71",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn71.png",
+        "photo": "./assets/ships/uss_roosevelt_cvn71.png",
         "launched": "1984-10-27",
         "commissioned": "1986-10-25",
         "history": [
@@ -1380,7 +1380,7 @@ const CARRIERS = [
         "hull": "CVN-72",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn72.png",
+        "photo": "./assets/ships/uss_lincoln_cvn72.png",
         "launched": "13 Feb 1988",
         "commissioned": "11 Nov 1989",
         "history": [
@@ -1543,7 +1543,7 @@ const CARRIERS = [
         "hull": "CVN-73",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn73.png",
+        "photo": "./assets/ships/uss_washington_cvn73.png",
         "launched": "21 Jul 1990",
         "commissioned": "4 Jul 1992",
         "history": [
@@ -1646,7 +1646,7 @@ const CARRIERS = [
         "hull": "CVN-78",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn78.png",
+        "photo": "./assets/ships/uss_ford_cvn78.png",
         "launched": "2013-11-09",
         "commissioned": "2017-07-22",
         "history": [
@@ -1749,7 +1749,7 @@ const CARRIERS = [
         "hull": "R91",
         "cls": "Marine Nationale (Francia)",
         "country": "Francia",
-        "photo": "./assets/ships/cdg91.png",
+        "photo": "./assets/ships/cdg_r91.png",
         "launched": "7 May 1994",
         "commissioned": "18 May 2001",
         "history": [
@@ -1941,7 +1941,7 @@ const CARRIERS = [
         "hull": "R08",
         "cls": "Royal Navy (Reino Unido)",
         "country": "Reino Unido",
-        "photo": "./assets/ships/qnlz8.png",
+        "photo": "./assets/ships/hms_queen_elizabeth_r08.png",
         "launched": "17 Jul 2014",
         "commissioned": "7 Dec 2017",
         "history": [
@@ -2118,7 +2118,7 @@ const CARRIERS = [
         "hull": "R09",
         "cls": "Royal Navy (Reino Unido)",
         "country": "Reino Unido",
-        "photo": "./assets/ships/r09.png",
+        "photo": "./assets/ships/hms_prince_of_wales_r09.png",
         "launched": "21 Dec 2017",
         "commissioned": "10 Dec 2019",
         "history": [
@@ -2235,7 +2235,7 @@ const CARRIERS = [
         "hull": "L61",
         "cls": "Armada Española",
         "country": "España",
-        "photo": "./assets/ships/l61.png",
+        "photo": "./assets/ships/esp_juan_carlos_l61.png",
         "launched": "2008-03-10",
         "commissioned": "2010-09-30",
         "history": [
@@ -2352,7 +2352,7 @@ const CARRIERS = [
         "hull": "CVN-74",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn74.png",
+        "photo": "./assets/ships/uss_stennis_cvn74.png",
         "launched": "11 Nov 1993",
         "commissioned": "9 Dec 1995",
         "history": [
@@ -2439,7 +2439,7 @@ const CARRIERS = [
         "hull": "CVN-75",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn75.png",
+        "photo": "./assets/ships/uss_truman_cvn75.png",
         "launched": "7 Sep 1996",
         "commissioned": "25 Jul 1998",
         "history": [
@@ -2571,7 +2571,7 @@ const CARRIERS = [
         "hull": "CVN-76",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn76.png",
+        "photo": "./assets/ships/uss_reagan_cvn76.png",
         "launched": "4 Mar 2001",
         "commissioned": "12 Jul 2003",
         "history": [
@@ -2733,7 +2733,7 @@ const CARRIERS = [
         "hull": "CVN-77",
         "cls": "Clase Nimitz (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/cvn77.png",
+        "photo": "./assets/ships/uss_bush_cvn77.png",
         "launched": "2006-10-09",
         "commissioned": "2009-01-10",
         "history": [
@@ -2879,7 +2879,7 @@ const CARRIERS = [
         "hull": "CVN-79",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "29 Oct 2019",
         "commissioned": "2025",
         "history": [
@@ -2966,7 +2966,7 @@ const CARRIERS = [
         "hull": "CVN-80",
         "cls": "Clase Ford (EE.UU.)",
         "country": "EE.UU.",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "Nov 2025",
         "commissioned": "2028",
         "history": [
@@ -3038,7 +3038,7 @@ const CARRIERS = [
         "hull": "C 550",
         "cls": "Armada Italiana (Marina Militare)",
         "country": "Italia",
-        "photo": "./assets/ships/c550.png",
+        "photo": "./assets/ships/ita_cavour_c550.png",
         "launched": "20 Jul 2004",
         "commissioned": "27 Mar 2008",
         "history": [
@@ -3260,7 +3260,7 @@ const CARRIERS = [
         "hull": "C 551",
         "cls": "Clase Garibaldi (Marina Militare)",
         "country": "Italia",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "4 Jun 1983",
         "commissioned": "30 Sep 1985",
         "history": [
@@ -3347,7 +3347,7 @@ const CARRIERS = [
         "name": "Liaoning",
         "hull": "CV-16",
         "cls": "Clase Tipo 001 (PLAN)",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "4 Dec 1988",
         "commissioned": "25 Sep 2012",
         "history": [
@@ -3569,7 +3569,7 @@ const CARRIERS = [
         "name": "Shandong",
         "hull": "CV-17",
         "cls": "Clase Tipo 002 (PLAN)",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "26 Apr 2017",
         "commissioned": "17 Dec 2019",
         "history": [
@@ -3821,7 +3821,7 @@ const CARRIERS = [
         "name": "Fujian",
         "hull": "CV-18",
         "cls": "Clase Tipo 003 (PLAN)",
-        "photo": "./assets/ships/cv18.png",
+        "photo": "./assets/ships/plan_fujian_cv18.png",
         "launched": "2022-06-17",
         "commissioned": null,
         "history": [
@@ -3983,7 +3983,7 @@ const CARRIERS = [
         "name": "Admiral Kuznetsov",
         "hull": "063",
         "cls": "Clase Kuznetsov (VMF)",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "1985-12-04",
         "commissioned": "1991-01-20",
         "history": [
@@ -4055,7 +4055,7 @@ const CARRIERS = [
         "hull": "R33",
         "cls": "Clase Gorshkov Mod.",
         "country": "India",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "1982-03-31",
         "commissioned": "2013-11-16",
         "history": [
@@ -4097,7 +4097,7 @@ const CARRIERS = [
         "hull": "DDH-183",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "2013-08-06",
         "commissioned": "2015-03-25",
         "history": [
@@ -4184,7 +4184,7 @@ const CARRIERS = [
         "hull": "DDH-184",
         "cls": "Clase Izumo (Japón)",
         "country": "Japón",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "2015-08-27",
         "commissioned": "2017-03-22",
         "history": [
@@ -4226,7 +4226,7 @@ const CARRIERS = [
         "hull": "L-400",
         "cls": "Porta-Drones (Turquía)",
         "country": "Turquía",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "2019-04-30",
         "commissioned": "2023-04-10",
         "history": [
@@ -4298,7 +4298,7 @@ const CARRIERS = [
         "hull": "A140",
         "cls": "Multiproposito (Brasil)",
         "country": "Brasil",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "1998-02-20",
         "commissioned": "2018-06-29",
         "history": [
@@ -4355,7 +4355,7 @@ const CARRIERS = [
         "hull": "911",
         "cls": "Portaaviones (Tailandia)",
         "country": "Tailandia",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "1996-01-20",
         "commissioned": "1997-03-20",
         "history": [
@@ -4382,7 +4382,7 @@ const CARRIERS = [
         "name": "INS Vikrant",
         "hull": "R11",
         "cls": "Infantería (CAC) Autóctona",
-        "photo": "./assets/ships/placeholder_carrier.png",
+        "photo": "./assets/ships/tactical_placeholder_intel.png",
         "launched": "2013-08-12",
         "commissioned": "2022-09-02",
         "history": [
